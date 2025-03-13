@@ -2,8 +2,6 @@
 
 Ein kooperatives Snake-Spiel für zwei Spieler, bei dem Sie gemeinsam spielen, um die höchste Punktzahl zu erreichen!
 
-![DoubleSnake Logo](https://via.placeholder.com/800x400?text=DoubleSnake+Game)
-
 ## 📋 Projektbeschreibung
 
 DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels, bei dem zwei Spieler gleichzeitig spielen können. Spieler erstellen oder treten Lobbys bei, um gemeinsam zu spielen und Punkte zu sammeln. Das Spiel wurde mit Node.js, Express und Socket.IO entwickelt, um Echtzeit-Multiplayer-Funktionalität zu bieten.
