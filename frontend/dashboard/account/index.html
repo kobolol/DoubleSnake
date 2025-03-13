@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Bearbeiten</title>
+    <link rel="stylesheet" href="../../style/generalStyle.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container menu">
+        <h1 class="title">Account</h1>
+        <h2>Ändere deine Benutzerdaten uns speichere sie ab!</h2>
+        <div class="buttonMenu container">
+            <form action="/api/account/update" method="post" class="container">
+                <h2 class="error" id="errorMsg"></h2>
+                <div class="splitContainerX">
+                    <div>
+                        <div class="formSection">
+                            <p>Username:</p>
+                            <input id="username" name="username" type="text" placeholder="Username">
+                        </div>
+                        <div class="formSection">
+                            <p>Email:</p>
+                            <input id="email" name="email" type="email" placeholder="E-mail">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="formSection">
+                            <p>Voller Name:</p>
+                            <input id="fullName" name="fullName" type="text" placeholder="Name">
+                        </div>
+                        <div class="formSection">
+                            <p>Neues Passwort:</p>
+                            <input id="password" name="password" type="password" placeholder="Neues Password">
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Speichern">
+            </form>
+
+            <div class="container navButtons">
+                <button id="dashboardBtn">
+                    <div class="buttonIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                            fill="#ffffff">
+                            <path d="M520-200 80-480l440-280-137 240h497v80H383l137 240Z" />
+                        </svg>
+                    </div>
+                    <div class="buttonText">
+                        Dashboard
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../scripts/ButtonManager.js"></script>
+<script src="../../scripts/ErrorHandler.js"></script>
+<script src="./index.js"></script>
+
+</html>

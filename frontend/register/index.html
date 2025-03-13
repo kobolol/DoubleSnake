@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registieren</title>
+    <link rel="stylesheet" href="../style/generalStyle.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container menu">
+        <h1 class="title">Registieren</h1>
+        <div class="buttonMenu container">
+            <form action="/api/account/register" method="post" class="container">
+                <h2 class="error" id="errorMsg"></h2>
+                <div class="splitContainerX">
+                    <div>
+                        <div class="formSection">
+                            <p>Username:</p>
+                            <input name="username" type="text" placeholder="Username">
+                        </div>
+                        <div class="formSection">
+                            <p>Email:</p>
+                            <input name="email" type="email" placeholder="E-mail">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="formSection">
+                            <p>Voller Name:</p>
+                            <input name="fullName" type="text" placeholder="Name">
+                        </div>
+                        <div class="formSection">
+                            <p>Passwort:</p>
+                            <input name="password" type="password" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Registieren" id="registerBtn">
+            </form>
+
+            <div class="container navButtons">
+                <button id="homeBtn">
+                    <div class="buttonIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                            fill="#ffffff">
+                            <path d="M520-200 80-480l440-280-137 240h497v80H383l137 240Z" />
+                        </svg>
+                    </div>
+                    <div class="buttonText">
+                        Startseite
+                    </div>
+                </button>
+                <button id="loginBtn">
+                    <div class="buttonIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                            fill="#ffffff">
+                            <path
+                                d="M480-120v-80h280v-560H480v-80h280q33
+                         0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
+                        </svg>
+                    </div>
+                    <div class="buttonText">
+                        Login
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../scripts/ButtonManager.js"></script>
+<script src="../scripts/ErrorHandler.js"></script>
+
+</html>
