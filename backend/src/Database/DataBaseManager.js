@@ -5,7 +5,7 @@ class DataBaseManager {
     constructor(host, database) {
         this.connection = mySql.createConnection({
             host: host,
-            port: 5432,
+            port: 3210,
             user: "root",
             password: "Jonas2007",
             database: database

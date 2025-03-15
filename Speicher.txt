@@ -1,35 +1,23 @@
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 http://phpmyadmin-ikockwc4sccc8oogoocswgow.100.100.54.2.sslip.io/
-agione.ddns.net:5432
+agione.v6.rocks:3210
 root
 Jonas2007
 
 <script src="/socket.io/socket.io.js"></script>
 
 
+UM Tabelle zu erstellen
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
+    fullName VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 /**@param {} x*/
 /**@typeof {} x*/
-
-
-https://codedamn.com/news/nodejs/use-json-web-token-jwt-in-nodejs
-
-
-<div class="screen">
-                    <nav>
-                        <h1>Spiel-Code:</h1>
-                        <h1 class="message">1A3B5C</h1>
-                    </nav>
-
-                    <div id="playerList">
-                        <div id="player1" class="player">
-                            <h1>Spieler 1</h1>
-                            <h2>test</h2>
-                        </div>
-                        <div id="player2" class="player">
-                            <h1>Spieler 2</h1>
-                            <h2>test</h2>
-                        </div>
-                    </div>
-                </div>
