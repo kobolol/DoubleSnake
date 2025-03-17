@@ -1,5 +1,7 @@
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
+192.168.200.93 Computer Schule
+
 
 
 <script src="/socket.io/socket.io.js"></script>
