@@ -1,11 +1,13 @@
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
-http://phpmyadmin-ikockwc4sccc8oogoocswgow.100.100.54.2.sslip.io/
-agione.v6.rocks:3210
+<script src="/socket.io/socket.io.js"></script>
+
+
+DB
+php.himb.net
+Server: himb.net:22049
 root
 Jonas2007
-
-<script src="/socket.io/socket.io.js"></script>
 
 
 UM Tabelle zu erstellen

@@ -1,19 +1,21 @@
 const mySql = require("mysql2");
 const UserManager = require("./UserManager/UserManager");
+require("dotenv").config();
 
 class DataBaseManager {
     constructor(host, database) {
         this.connection = mySql.createConnection({
             host: host,
-            port: 3210,
+            port: process.env.DB_PORT,
             user: "root",
-            password: "Jonas2007",
+            password: process.env.DB_PASSWORD,
             database: database
         });
 
         this.connection.connect((err) => {
             if (err) {
                 throw err;
+
             }
         });
 
