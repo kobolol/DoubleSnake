@@ -2,7 +2,7 @@ button {
     width: 350px;
 }
 
-#joinBtn{
+#joinOverlayBtn{
     background-color: rgb(0, 119, 255);
 }
 
@@ -63,4 +63,13 @@ button {
 #player2{
     background-color: rgba(0, 89, 255, 0.377);
     border-radius: 0 0 10px 10px;
+}
+
+.formSection h2{
+    text-align: center;
+    
+}
+
+#codeInp{
+    text-align: center;
 }

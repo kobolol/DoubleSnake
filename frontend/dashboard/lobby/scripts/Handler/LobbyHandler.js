@@ -28,8 +28,7 @@ class LobbyHandler {
         this.socket.emit("createLobby");
     }
 
-    handleJoinClick(){
-        const code = prompt("Bitte gib den 6 Stelligen Code ein");
+    handleJoinClick(code){
         this.socket.emit("joinLobby", code);
     }
 
@@ -56,14 +55,16 @@ class LobbyHandler {
                 <div class="player" id="player${index + 1}">
                     <h1>Spieler ${index + 1}${amI}</h1>
                     <h1>${player.username}</h1>
-                    </div>
+                </div>
                 `;
 
             lobbyContainer.innerHTML = `
                 <div class="screen">
                     <nav>
                         <h1>Spiel-Code:</h1>
-                        <h1 class="message">${this.code}</h1>
+                        <h1 class="message" id="code">
+                            ${this.code}
+                        </h1>
                     </nav>
                     <div id="playerList">
                         ${playerHTML}
@@ -71,6 +72,17 @@ class LobbyHandler {
                 </div>
                 `;
         });
+
+        const codeText = document.getElementById("code");
+        codeText.addEventListener("click", () => {
+            codeText.innerText = "Kopiert!"
+
+            setTimeout(() => {
+                codeText.innerText = this.code;
+            }, 1500);
+
+            navigator.clipboard.writeText(this.code);
+        })
 
         this.errorMsg.style.display = "none";
     }
