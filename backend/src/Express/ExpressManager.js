@@ -5,6 +5,7 @@ const path = require("path");
 const DataBaseManager = require("../Database/DataBaseManager");
 const AccountRoute = require("./Routes/AccountRoute");
 const DashboardRoute = require("./Routes/DashboardRoute");
+require("dotenv").config();
 
 class ExpressManager{
     /**@param {DataBaseManager} dbManager*/
@@ -26,7 +27,7 @@ class ExpressManager{
         this.app.use(bp.urlencoded({extended: false}));
         this.app.use(express.json());
         this.app.use(bp.json());
-        this.app.use(express.static(path.join(__dirname, "./../../../frontend")));
+        this.app.use(express.static(path.join(__dirname, process.env.FRONTEND_PATH || "./../../../frontend")));
 
         // Routen wo man für Angemeldet sein muss
         this.authRoutes = [
