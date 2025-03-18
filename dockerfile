@@ -5,13 +5,13 @@ FROM node:16
 WORKDIR /usr/src/app
 
 # Kopieren Sie die package.json und package-lock.json Dateien
-COPY package*.json ./
+COPY backend/package*.json ./
 
 # Installieren Sie die Abhängigkeiten
 RUN npm install
 
 # Kopieren Sie den Rest des Anwendungsquellcodes
-COPY . .
+COPY backend/ ./
 
 # Exponieren Sie den Port, auf dem die Anwendung läuft
 EXPOSE 3000
