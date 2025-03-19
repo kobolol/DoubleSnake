@@ -3,7 +3,7 @@ import LobbyHandler from "./Handler/LobbyHandler.js";
 class ServerConnectionManager {
     constructor() {
         /**@type {import("../../../../backend/node_modules/socket.io-client".Socket} für Autocompletions VSC*/
-        this.socket = io(`http://${window.location.hostname}:${window.location.port}`);
+        this.socket = io(`${window.location.protocol}//${window.location.hostname}:${window.location.port}`);
 
         this.lobbyContainer = document.getElementById("mainDiv");
         this.createBtn = document.getElementById("createBtn");
