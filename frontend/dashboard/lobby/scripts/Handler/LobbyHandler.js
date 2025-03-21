@@ -50,39 +50,39 @@ class LobbyHandler {
 
         let playerHTML = "";
         this.playerList.forEach((player, index) => {
-            const amI = player.id === this.user.id ? " (Ich)" : "";
+            const amI = player.id === this.user.id ? ` <span class="message">Ich</span>` : "";
             playerHTML += `
                 <div class="player" id="player${index + 1}">
                     <h1>Spieler ${index + 1}${amI}</h1>
                     <h1>${player.username}</h1>
                 </div>
-                `;
-
-            lobbyContainer.innerHTML = `
-                <div class="screen">
-                    <nav>
-                        <h1>Spiel-Code:</h1>
-                        <h1 class="message" id="code">
-                            ${this.code}
-                        </h1>
-                    </nav>
-                    <div id="playerList">
-                        ${playerHTML}
-                    </div>
-                </div>
-                `;
+            `;
         });
+            
+        lobbyContainer.innerHTML = `
+            <div class="screen">
+                <nav>
+                    <h1>Spiel-Code:</h1>
+                    <h1 class="message" id="code">
+                        ${this.code}
+                    </h1>
+                </nav>
+                <div id="playerList">
+                    ${playerHTML}
+                </div>
+            </div>
+        `;
 
         const codeText = document.getElementById("code");
-        codeText.addEventListener("click", () => {
-            codeText.innerText = "Kopiert!"
+        codeText.addEventListener("click", (event) => {
+            event.target.innerText = "Kopiert!"
 
             setTimeout(() => {
                 codeText.innerText = this.code;
             }, 1500);
 
             navigator.clipboard.writeText(this.code);
-        })
+        });
 
         this.errorMsg.style.display = "none";
     }
