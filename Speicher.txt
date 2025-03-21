@@ -7,7 +7,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 DB
 php.himb.net
-Server: himb.net:22049
+Server: 192.168.178.62:5555
 root
 Jonas2007
 
