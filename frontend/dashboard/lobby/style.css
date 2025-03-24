@@ -73,3 +73,7 @@ button {
 #codeInp{
     text-align: center;
 }
+
+.hidden{
+    display: none;
+}

@@ -1,3 +1,5 @@
+import StartGameHandler from "./StartGameHandler.js";
+
 class LobbyHandler {
     /**@param {import("../../../../../backend/node_modules/socket.io-client".Socket} socket Autocompletions VSC*/
     constructor(socket) {
@@ -22,6 +24,9 @@ class LobbyHandler {
 
         // Für das Aktualisieren
         this.socket.on("lobbyUserUpdate", (data) => { this.lobbyUserUpdate(data) });
+
+        // Für alles Was mit dem Starten zu tuhen hat
+        this.startGameHandler = new StartGameHandler(this.socket);
     }
 
     handleCreateClick() {

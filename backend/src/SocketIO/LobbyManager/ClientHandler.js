@@ -20,7 +20,7 @@ class ClientHandler {
         this.socket.on("createLobby", () => { this.createLobby() })
         this.socket.on("joinLobby", (code) => { this.joinLobby(code) })
         this.socket.on("refreshLobby", () => { this.refreshLobby() })
-        this.socket.on("disconnect", () => { this.disconnect() })
+        this.socket.on("disconnect", () => { this.defaultDisconnect() })
     }
 
     createLobby(){
@@ -43,7 +43,7 @@ class ClientHandler {
 
         this.currentLobbyCode = response;
 
-        this.socket.join(`lobby-${response}`)
+        this.socket.join(`lobby-${response}`);
         this.socket.emit("lobbyJoined", response);
         this.refreshLobby();
     }
@@ -52,7 +52,7 @@ class ClientHandler {
         this.lobbyManager.refreshLobby(this.currentLobbyCode);
     }
 
-    disconnect(){
+    defaultDisconnect(){
         this.lobbyManager.removeFromLobby(this.currentLobbyCode, this.user);
     }
 }

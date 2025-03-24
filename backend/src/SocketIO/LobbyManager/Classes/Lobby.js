@@ -8,14 +8,21 @@ class Lobby {
         this.code = code;
         /** @type {Array<SocketUser>} */
         this.users = [];
+
+        this.gameStart = false;
+        this.currentSecond = 5;
     }
 
     addUser(user) {
         if (this.users.length >= 2) return 1;
 
         this.users.push(user);
-
         this.sendLobbyUserUpdate();
+
+        if(this.users.length === 2) {
+            console.log("Starte Spiel");
+            setTimeout(this.startGame.bind(this), 2000);
+        }
 
         return 0;
     }
@@ -44,6 +51,49 @@ class Lobby {
         }
 
         this.io.to(`lobby-${this.code}`).emit("lobbyUserUpdate", data);
+    }
+
+    startGame() {
+        this.users.forEach(user => {
+            user.socket.on("disconnect", this.interruptStart.bind(this));
+        });
+
+        this.gameStart = true;
+
+        setTimeout(this.sendStartGameUpdate.bind(this), 1000);
+    }
+
+    sendStartGameUpdate() {
+        if(!this.gameStart) return;
+
+        const data = {
+            code: this.code,
+            needRedirect: this.currentSecond <= 0,
+            currentSecond: this.currentSecond
+        }
+
+        this.io.to(`lobby-${this.code}`).emit("startGame", data);
+        this.currentSecond--;
+        
+        if(this.currentSecond === -2) {
+            this.gameStart = false;
+            this.currentSecond = 5;
+
+            return;
+        }
+
+        setTimeout(this.sendStartGameUpdate.bind(this), 1000);
+    }
+
+    interruptStart() {
+        this.gameStart = false;
+        this.currentSecond = 5;
+
+        this.users.forEach(user => {
+            user.socket.off("disconnect", this.interruptStart.bind(this));
+        });
+
+        this.io.to(`lobby-${this.code}`).emit("interruptStart");
     }
 }
 

@@ -1,6 +1,7 @@
 const socketIO = require("socket.io");
 const Lobby = require("./Classes/Lobby");
 const SocketUser = require("./Classes/SocketUser");
+const TemporaryLobby = require("./Classes/TemporaryLobby");
 
 class LobbyManager {
     /** @param {socketIO.Server} io */
@@ -9,6 +10,9 @@ class LobbyManager {
 
         /** @type {Map<string, Lobby>}*/
         this.lobbys = new Map();
+
+        /** @type {Array<TemporaryLobby>}*/
+        this.oldLobbys = [];
 
         // Zeigt die Anzahl der Lobbys an | Für Testing
         // setInterval(() => {
