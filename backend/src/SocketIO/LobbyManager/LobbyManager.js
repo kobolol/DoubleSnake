@@ -16,7 +16,7 @@ class LobbyManager {
 
         // Zeigt die Anzahl der Lobbys an | Für Testing
         // setInterval(() => {
-        //     console.log(this.lobbys.size);
+        //     console.log(this.oldLobbys.length);
         // }, 1000);
 
     }
@@ -24,7 +24,7 @@ class LobbyManager {
     /** @param {SocketUser} user */
     createLobby(user){
         const code = this.generateNonExistingCode();
-        const lobby = new Lobby(this.io, code);
+        const lobby = new Lobby(this.io, this ,code);
         lobby.addUser(user);
         this.lobbys.set(code, lobby);
         return code;

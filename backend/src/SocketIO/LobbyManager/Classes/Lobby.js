@@ -1,10 +1,13 @@
 const socketIO = require("socket.io");
 const SocketUser = require("./SocketUser");
+const LobbyManager = require("../LobbyManager");
+const TemporaryLobby = require("./TemporaryLobby");
 
 class Lobby {
-    /** @param {socketIO.Server} io @param {Map<number, SocketUser>} users*/
-    constructor(io, code) {
+    /** @param {socketIO.Server} io @param {LobbyManager} lobbyManager @param {number} code */
+    constructor(io, lobbyManager, code) {
         this.io = io;
+        this.lobbyManager = lobbyManager;
         this.code = code;
         /** @type {Array<SocketUser>} */
         this.users = [];
@@ -21,7 +24,7 @@ class Lobby {
 
         if(this.users.length === 2) {
             console.log("Starte Spiel");
-            setTimeout(this.startGame.bind(this), 2000);
+            this.startGame();
         }
 
         return 0;
@@ -74,6 +77,23 @@ class Lobby {
 
         this.io.to(`lobby-${this.code}`).emit("startGame", data);
         this.currentSecond--;
+
+        if(this.currentSecond === 0){
+            const newUserList = [];
+
+            this.users.forEach(x => {
+                const user = new SocketUser(x.id, x.username);
+                newUserList.push(user);
+            })
+
+            const tempLobby = new TemporaryLobby(
+                this.code,
+                newUserList,
+                this.lobbyManager
+            );
+
+            this.lobbyManager.oldLobbys.push(tempLobby);
+        }
         
         if(this.currentSecond === -2) {
             this.gameStart = false;

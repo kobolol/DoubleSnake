@@ -32,7 +32,8 @@ class ExpressManager{
         // Routen wo man für Angemeldet sein muss
         this.authRoutes = [
             "/api/dashboard",
-            "/dashboard"
+            "/dashboard",
+            "/game"
         ];
 
         // Routen Einbinden
