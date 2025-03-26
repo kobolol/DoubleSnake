@@ -12,10 +12,13 @@
 }
 
 body {
-    background-color: rgb(40, 85, 51);
+    /* background-color: rgb(40, 85, 51);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5) 2px, transparent 1px),
         linear-gradient(90deg, rgba(0, 0, 0, 0.5) 2px, transparent 1px);
-    background-size: 55px 55px;
+    background-size: 55px 55px; */
+
+    background-image: url('../assets/Background_Template_Dark.png');
+    background-repeat: repeat;
     color: white;
 }
 
@@ -77,6 +80,13 @@ body {
     user-select: none;
 }
 
+.logo {
+    width: 500px;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
 button,
 .button,
 input[type=submit] {
@@ -131,7 +141,7 @@ input[type=submit]:active {
 }
 
 .buttonMenu {
-    height: 50vh;
+    height: 55vh;
     width: 100vw;
 }
 
