@@ -3,7 +3,8 @@ const http = require("http");
 const DataBaseManager = require("../Database/DataBaseManager");
 const ExpressManager = require("../Express/ExpressManager");
 const LobbyManager = require("./LobbyManager/LobbyManager");
-const ClientHandler = require("./LobbyManager/ClientHandler");
+const ClientHandlerLobby = require("./LobbyManager/ClientHandler");
+const ClientHandlerGame = require("./GameManager/ClientHandler");
 require("dotenv").config();
 
 class SocketIOManager {
@@ -27,7 +28,6 @@ class SocketIOManager {
 
         /*
             Der LobbyManager kümmert sich um alle Lobbys
-            Der LobbyHandler kümmert sich um die einzelnen Anfragen der Clients
          */
         this.lobbyManager = new LobbyManager(this.io);
 
@@ -61,7 +61,11 @@ class SocketIOManager {
         });
 
         socket.on("hereForLobby", () => {
-            new ClientHandler(socket, this.lobbyManager);
+            new ClientHandlerLobby(socket, this.lobbyManager);
+        });
+
+        socket.on("hereForGame", () => {
+            new ClientHandlerGame(socket, this.lobbyManager);
         });
     }
 }

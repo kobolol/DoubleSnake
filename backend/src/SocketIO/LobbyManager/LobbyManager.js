@@ -1,6 +1,6 @@
 const socketIO = require("socket.io");
 const Lobby = require("./Classes/Lobby");
-const SocketUser = require("./Classes/SocketUser");
+const SocketUser = require("../Classes/SocketUser");
 const TemporaryLobby = require("./Classes/TemporaryLobby");
 
 class LobbyManager {

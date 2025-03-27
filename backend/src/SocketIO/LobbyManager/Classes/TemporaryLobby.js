@@ -1,4 +1,6 @@
+const { Socket } = require("socket.io");
 const LobbyManager = require("../LobbyManager");
+const SocketUser = require("../../Classes/SocketUser");
 
 class TemporaryLobby{
     /** @param { string } code  @param {Array<SocketUser>} users @param {LobbyManager} lobbyManager*/

@@ -15,12 +15,12 @@ class ServerConnectionManager {
 
         this.socket.on("connect_error", (error) => {
             console.log(error);
-            window.location.pathname = "/dashboard";
+            window.location.pathname = "/dashboard/lobby";
         });
 
         this.socket.on("disconnect", () => {
             console.log("Die verbindung wurde unterbrochen!");
-            window.location.pathname = "/dashboard";
+            window.location.pathname = "/dashboard/lobby";
         });
     }
 }
