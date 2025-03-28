@@ -8,6 +8,7 @@ class Lobby {
     constructor(io, lobbyManager, code) {
         this.io = io;
         this.lobbyManager = lobbyManager;
+        
         this.code = code;
         /** @type {Array<SocketUser>} */
         this.users = [];
@@ -23,7 +24,6 @@ class Lobby {
         this.sendLobbyUserUpdate();
 
         if(this.users.length === 2) {
-            console.log("Starte Spiel");
             this.startGame();
         }
 

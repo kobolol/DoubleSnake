@@ -14,7 +14,7 @@ class ClientHandler {
             this.socket
         );
 
-        this.socket.on("disconnect", () => { this.defaultDisconnect() })
+        this.socket.on("disconnect", () => { this.defaultDisconnect() });
 
         this.checkForLobby();
     }
