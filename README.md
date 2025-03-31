@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./frontend/assets/Logo.png" alt="DoubleSnake Logo" width="200">
+  <img src="./frontend/assets/Logo.png" alt="DoubleSnake Logo" width="200" style="border-radius: 100%;">
 </p>
 
 # DoubleSnake
