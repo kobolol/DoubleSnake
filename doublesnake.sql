@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `doublesnake`
 --
+CREATE DATABASE IF NOT EXISTS `doublesnake` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `doublesnake`;
 
 -- --------------------------------------------------------
 
