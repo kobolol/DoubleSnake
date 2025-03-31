@@ -1,65 +1,102 @@
-# 🐍 DoubleSnake
+<p align="center">
+  <img src="./frontend/assets/Logo.png" alt="DoubleSnake Logo" width="200">
+</p>
 
-Ein kooperatives Snake-Spiel für zwei Spieler, bei dem Sie gemeinsam spielen, um die höchste Punktzahl zu erreichen!
+# DoubleSnake
 
-## 📋 Projektbeschreibung
+Ein kooperatives Snake-Spiel für zwei Spieler, entwickelt mit Node.js, Express und Socket.IO.
 
-DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels, bei dem zwei Spieler gleichzeitig spielen können. Spieler erstellen oder treten Lobbys bei, um gemeinsam zu spielen und Punkte zu sammeln. Das Spiel wurde mit Node.js, Express und Socket.IO entwickelt, um Echtzeit-Multiplayer-Funktionalität zu bieten.
+## 📋 Projektübersicht
 
-## 🚀 Funktionen
+DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels für zwei Spieler. Es ermöglicht Spielern, gemeinsam in Echtzeit zu spielen und Punkte zu sammeln. Das Spiel bietet ein Lobby-System zum Erstellen und Beitreten von Spielen sowie Benutzerkonten zur Spielerverwaltung.
 
-- **Benutzerkonten**: Registrierung und Anmeldung
+## 🌟 Hauptfunktionen
+
+- **Benutzerkonten-System**: Registrierung, Anmeldung und Profilbearbeitung
 - **Lobby-System**: Erstellen und Beitreten von Spielen mit eindeutigen Codes
-- **Echtzeit-Multiplayer**: Spielen Sie gleichzeitig mit einem Freund
-- **Reaktionsschnelles Design**: Funktioniert auf Desktop und mobilen Geräten
+- **Echtzeit-Multiplayer**: Simultanes Spielen mit einem Partner
+- **Responsive Design**: Optimiert für Desktop und mobile Geräte
 
-## 🔧 Technologien
+## 🛠️ Technologien
 
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express
 - **Echtzeit-Kommunikation**: Socket.IO
-- **Datenbank**: MySQL
+- **Datenbank**: MySQL2
+- **Authentifizierung**: Bcrypt, Express-Session
 
-## 💻 Installation
+## 🚀 Installation
 
-Folgen Sie diesen Schritten, um DoubleSnake auf Ihrem lokalen Computer einzurichten:
+### Voraussetzungen
+- Node.js (Version 18 oder höher)
+- MySQL Server
 
-1. Repository klonen:
+### Schritte zur Installation
+
+1. **Repository klonen**
    ```bash
    git clone https://github.com/yourusername/doubleSnake.git
    cd doubleSnake
    ```
 
-2. Backend-Abhängigkeiten installieren:
+2. **Datenbank einrichten**
+   - Erstellen Sie eine MySQL-Datenbank mit dem Namen "doublesnake"
+   - Importieren Sie die Datenbankstruktur aus der Datei `doublesnake.sql`
+
+3. **Umgebungsvariablen konfigurieren**  
+   Erstellen Sie eine `.env`-Datei im Backend-Verzeichnis mit folgenden Werten:
+   ```
+   SESSION_KEY=IhrGeheimesSessionKey
+   PORT=3000
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_PASSWORD=IhrDatenbankPasswort
+   FRONTEND_PATH=../frontend
+   ```
+
+4. **Dependencies installieren**
    ```bash
    cd backend
    npm install
    ```
 
-3. MySQL-Datenbank einrichten:
-   - Erstellen Sie eine Datenbank mit dem Namen "doublesnake"
-   - Importieren Sie die SQL-Struktur aus dem "database"-Ordner (falls vorhanden)
-   - Oder erstellen Sie eine "users"-Tabelle mit den Feldern id, username, email, password, fullName, createdAt
-
-4. Umgebungsvariablen konfigurieren:
-   Erstellen Sie eine `.env`-Datei im Backend-Verzeichnis mit folgendem Inhalt:
-   ```
-   SESSION_KEY=IhrGeheimesSessionKey
-   PORT=3000
-   ```
-
-5. Server starten:
+5. **Server starten**
    ```bash
    npm run dev
+   # oder mit Nodemon
+   npm run nm
    ```
 
-6. Öffnen Sie Ihren Browser und navigieren Sie zu `http://localhost:3000`
+6. **Anwendung öffnen**  
+   Navigieren Sie zu `http://localhost:3000` in Ihrem Browser
 
-## 🎮 Spielanleitung
+## 🐳 Docker-Installation
 
-1. Registrieren Sie sich für ein neues Konto oder melden Sie sich an
+Das Projekt enthält eine Dockerfile für einfaches Deployment:
+
+```bash
+docker build -t doublesnake .
+docker run -p 3000:3000 -e DB_HOST=your-db-host doublesnake
+```
+
+## 🎮 Spielablauf
+
+1. Registrieren Sie sich für ein Konto oder melden Sie sich an
 2. Navigieren Sie zum Dashboard und wählen Sie "Lobby"
-3. Erstellen Sie eine neue Lobby oder treten Sie einer bestehenden bei
-4. Teilen Sie den 6-stelligen Code mit einem Freund
+3. Erstellen Sie eine neue Lobby oder treten Sie einer bestehenden mit einem Code bei
+4. Teilen Sie den generierten Code mit einem Freund
 5. Sobald zwei Spieler verbunden sind, beginnt das Spiel automatisch
-6. Steuern Sie Ihre Schlange mit den Pfeiltasten und vermeiden Sie Kollisionen
+6. Steuern Sie Ihre Schlange, sammeln Sie Punkte und vermeiden Sie Kollisionen
+
+## 👨‍💻 Entwicklung
+
+Das Projekt ist in folgende Hauptkomponenten unterteilt:
+
+- **Server**: Express und Socket.IO für HTTP- und Websocket-Kommunikation
+- **Datenbank**: Benutzerkonten und -daten
+- **Lobby-System**: Verwaltung von Spielräumen und Spielerzuordnung
+- **Game-Engine**: Kernspielfunktionalität und -logik
+
+## 📄 Lizenz
+
+Dieses Projekt steht unter der MIT-Lizenz. Weitere Details finden Sie in der LICENSE-Datei.
