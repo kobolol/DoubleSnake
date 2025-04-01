@@ -5,6 +5,7 @@ const ExpressManager = require("../Express/ExpressManager");
 const LobbyManager = require("./LobbyManager/LobbyManager");
 const ClientHandlerLobby = require("./LobbyManager/ClientHandler");
 const ClientHandlerGame = require("./GameManager/ClientHandler");
+const GameManager = require("./GameManager/GameManager");
 require("dotenv").config();
 
 class SocketIOManager {
@@ -30,6 +31,7 @@ class SocketIOManager {
             Der LobbyManager kümmert sich um alle Lobbys
          */
         this.lobbyManager = new LobbyManager(this.io);
+        this.gameManager = new GameManager(this.io, this.lobbyManager);
 
         this.io.on("connection", (socket) => { this.sendToRightManager(socket) });
 

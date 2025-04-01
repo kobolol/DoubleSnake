@@ -1,12 +1,15 @@
 const socketIO = require("socket.io");
 const SocketUser = require("../Classes/SocketUser");
 const LobbyManager = require("../LobbyManager/LobbyManager");
+const GameManager = require("./GameManager");
 
 class ClientHandler {
-    /** @param {socketIO.Socket} socket @param {LobbyManager} lobbyManager */
-    constructor(socket, lobbyManager) {
+    /** @param {socketIO.Socket} socket @param {GameManager} gameManager */
+    constructor(socket, gameManager) {
         this.socket = socket;
-        this.lobbyManager = lobbyManager;
+        this.gameManager = gameManager;
+
+        this.currentGameCode = null;
 
         this.user = new SocketUser(
             this.socket.request.session.user.id,
@@ -16,17 +19,11 @@ class ClientHandler {
 
         this.socket.on("disconnect", () => { this.defaultDisconnect() });
 
-        this.checkForLobby();
+        this.joinGame();
     }
 
-    checkForLobby(){
-        const isUserInLobby = this.lobbyManager.oldLobbys.some((lobby) =>
-            lobby.users.some((user) => user.id === this.user.id)
-        );
-    
-        if (!isUserInLobby) {
-            this.socket.disconnect();
-        }
+    joinGame(){
+        const response = this.gameManager.joinGame(this.user);
     }
 
     defaultDisconnect(){

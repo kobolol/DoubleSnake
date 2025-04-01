@@ -24,7 +24,7 @@ class LobbyManager {
     /** @param {SocketUser} user */
     createLobby(user){
         const code = this.generateNonExistingCode();
-        const lobby = new Lobby(this.io, this ,code);
+        const lobby = new Lobby(this.io, this, code);
         lobby.addUser(user);
         this.lobbys.set(code, lobby);
         return code;
