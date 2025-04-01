@@ -24,6 +24,11 @@ class ClientHandler {
 
     joinGame(){
         const response = this.gameManager.joinGame(this.user);
+
+        if(response === 1) return this.socket.disconnect();
+        this.currentGameCode = response;
+
+        this.socket.join(`game-${this.currentGameCode}`);
     }
 
     defaultDisconnect(){

@@ -1,4 +1,6 @@
+const socketIO = require("socket.io");
 const SocketUser = require("../Classes/SocketUser");
+const TemporaryLobby = require("../LobbyManager/Classes/TemporaryLobby");
 const LobbyManager = require("../LobbyManager/LobbyManager");
 const Game = require("./Game/Game");
 
@@ -14,8 +16,11 @@ class GameManager {
 
     /** @param {SocketUser} user */
     joinGame(user){
-        const wasInLobby = false;
-        const oldLobbySave = undefined;
+        let wasInLobby = false;
+        
+        /** @type {TemporaryLobby} */
+        let oldLobbySave = undefined;
+
         this.lobbyManager.oldLobbys.forEach(oldLobby => {
             oldLobby.users.forEach(lobbyUser => {
                 if(lobbyUser.id === user.id){
@@ -25,10 +30,22 @@ class GameManager {
             });
         });
 
-        if(!wasInLobby) user.socket.disconnect();
+        console.log(oldLobbySave)
 
-        // Checken ob lobby existiert
-        // neuen Lobby erstellen Aufgabe
+        if(!wasInLobby) return 1;
+
+        if(!oldLobbySave.gameCode){
+            const code = this.generateNonExistingCode();
+            const game = new Game(this.io, this, code);
+            this.games.set(code, game);
+
+            oldLobbySave.gameCode = code;
+        }
+
+        const response = this.games.get(oldLobbySave.gameCode).addUser(user);
+        if(response === 1) return 1;
+
+        return oldLobbySave.gameCode;
     }
 
     generateNonExistingCode() {

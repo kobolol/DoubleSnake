@@ -4,8 +4,19 @@ class ServerConnectionManager {
         this.socket = io(`${window.location.protocol}//${window.location.hostname}:${window.location.port}`);
 
         this.basicSetup();
+
+        this.socket.on("waitForStart", (data) => {this.waitForStart(data)});
+        this.socket.on("randomTest", (data) => {this.randomTest(data)});
     }
 
+    waitForStart(data) {
+        document.getElementById("pc").innerText = data;
+    }
+
+    randomTest(data) {
+        document.getElementById("rd").innerText = data;
+    }
+    
     basicSetup() {
         this.socket.emit("hereForGame");
 

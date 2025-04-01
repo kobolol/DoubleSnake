@@ -44,7 +44,8 @@ class ExpressManager{
     /**@param {express.Request} req @param {express.Response} res @param {express.NextFunction} next*/
     logger(req, res, next){
         const date = new Date();
-        console.log(`${date.toTimeString().slice(0, 8)} | ${req.method} | ${req.url}`);
+        // TODO: Lösche Kommentar wenn fertig mit testen
+        //console.log(`${date.toTimeString().slice(0, 8)} | ${req.method} | ${req.url}`);
         next();
     }
 

@@ -14,6 +14,7 @@ class StartGameHandler {
         this.countDownText.innerText = data.currentSecond;
 
         if(data.needRedirect){
+            this.socket.disconnect();
             window.location.pathname = `/game`;
         }
     }

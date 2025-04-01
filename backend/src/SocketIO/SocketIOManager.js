@@ -67,7 +67,7 @@ class SocketIOManager {
         });
 
         socket.on("hereForGame", () => {
-            new ClientHandlerGame(socket, this.lobbyManager);
+            new ClientHandlerGame(socket, this.gameManager);
         });
     }
 }

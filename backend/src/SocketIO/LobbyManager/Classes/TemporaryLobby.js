@@ -9,6 +9,8 @@ class TemporaryLobby{
         this.users = users;
         this.lobbyManager = lobbyManager;
 
+        this.gameCode = null;
+
         setTimeout(this.selfDestroy.bind(this), 4000);
     }
 

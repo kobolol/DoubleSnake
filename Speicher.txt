@@ -25,4 +25,4 @@ CREATE TABLE users (
 
 
 /**@param {} x*/
-/**@typeof {} x*/
+/**@type {} x*/
