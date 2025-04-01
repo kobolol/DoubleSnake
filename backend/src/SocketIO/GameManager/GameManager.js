@@ -27,9 +27,8 @@ class GameManager {
 
         if(!wasInLobby) user.socket.disconnect();
 
-        const code = this.generateNonExistingCode();
-        const game = new Game(this.io, this, code);
-        this.games.set(code, game);
+        // Checken ob lobby existiert
+        // neuen Lobby erstellen Aufgabe
     }
 
     generateNonExistingCode() {
