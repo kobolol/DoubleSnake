@@ -5,18 +5,14 @@ class ServerConnectionManager {
 
         this.basicSetup();
 
-        this.socket.on("waitForStart", (data) => { this.waitForStart(data) });
-        this.socket.on("randomTest", (data) => { this.randomTest(data) });
+        // Socket.on Handler und Routen
+        this.socket.on("waitingForPlayers", (msg) => {
+            const { msg: message, waitingSeconds } = msg;
+            document.getElementById("wM").innerText = message;
+            document.getElementById("wS").innerText = waitingSeconds;
+        });
 
         this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
-    }
-
-    waitForStart(data) {
-        document.getElementById("pc").innerText = data;
-    }
-
-    randomTest(data) {
-        document.getElementById("rd").innerText = data;
     }
 
     gameEnd(msg){

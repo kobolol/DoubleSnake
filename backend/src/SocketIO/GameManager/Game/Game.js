@@ -9,17 +9,44 @@ class Game{
         this.gameManager = gameManager;
         this.code = code;
 
+        this.waitingSeconds = 5;
         this.gameStart = false;
 
         /**@type {Array<SocketUser>} */
         this.players = []
 
-        // TODO: 5 Seconds after initialization, check if game has 2 players. if not stop game
+        setTimeout(() => { this.waitingForPlayers(true) }, 100)
+    }
 
-        setInterval(() => {
-            this.io.to(`game-${this.code}`).emit("waitForStart", this.players.length);
-            this.io.to(`game-${this.code}`).emit("randomTest", Math.floor(Math.random() * 1000) + 1);
-        }, 100);
+    waitingForPlayers(changeTime = false){
+        if(this.waitingSeconds === 0){
+            if(this.players.length < 2) {
+                this.io.to(`game-${this.code}`).emit("gameEnd", "Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!");
+                this.gameManager.games.delete(this.code);
+                return;
+            }
+    
+            this.gameStart = true;
+            return this.io.to(`game-${this.code}`).emit("gameStart");
+        }
+
+        let msg = "";
+        this.players.forEach(player => {
+            if(msg === ""){
+                msg = `Schon beigetreten sind: ${player.username}`;
+            }
+            else{
+                msg += ` und ${player.username}, es geht Sofort los!`;
+            }
+        });
+        
+        this.io.to(`game-${this.code}`).emit("waitingForPlayers", {
+            msg: msg,
+            waitingSeconds: this.waitingSeconds
+        });
+
+        if (changeTime) this.waitingSeconds--;
+        setTimeout(() => { this.waitingForPlayers(true) }, 1000)
     }
 
     
@@ -27,6 +54,8 @@ class Game{
     /** @param {SocketUser} user */
     addUser(user){
         if(this.players.length >= 2) return 1;
+
+        this.waitingForPlayers();
 
         this.players.push(user);
     }
