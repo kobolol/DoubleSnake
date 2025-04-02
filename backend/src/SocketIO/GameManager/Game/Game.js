@@ -17,11 +17,12 @@ class Game{
         setInterval(() => {
             this.io.to(`game-${this.code}`).emit("waitForStart", this.players.length);
             this.io.to(`game-${this.code}`).emit("randomTest", Math.floor(Math.random() * 1000) + 1);
-        }, 1000);
+        }, 100);
     }
 
     addUser(user){
         if(this.players.length >= 2) return 1;
+
         this.players.push(user);
     }
 }

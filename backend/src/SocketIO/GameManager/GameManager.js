@@ -30,13 +30,12 @@ class GameManager {
             });
         });
 
-        console.log(oldLobbySave)
-
         if(!wasInLobby) return 1;
 
         if(!oldLobbySave.gameCode){
             const code = this.generateNonExistingCode();
             const game = new Game(this.io, this, code);
+            
             this.games.set(code, game);
 
             oldLobbySave.gameCode = code;
