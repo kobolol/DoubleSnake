@@ -12,6 +12,11 @@ class GameManager {
 
         /** @type {Map<string, Game>}*/
         this.games = new Map();
+
+        // Für Debugging
+        // setInterval(() => {
+        //     console.log(`Es gibt ${this.games.size} Spiele`);
+        // });
     }
 
     /** @param {SocketUser} user */
@@ -45,6 +50,14 @@ class GameManager {
         if(response === 1) return 1;
 
         return oldLobbySave.gameCode;
+    }
+
+    leaveGame(user, code){
+        const game = this.games.get(code);
+        if(!game) return 1;
+
+        const response = game.leaveUser(user);
+        if(response === 1) this.games.delete(code);
     }
 
     generateNonExistingCode() {

@@ -5,8 +5,10 @@ class ServerConnectionManager {
 
         this.basicSetup();
 
-        this.socket.on("waitForStart", (data) => {this.waitForStart(data)});
-        this.socket.on("randomTest", (data) => {this.randomTest(data)});
+        this.socket.on("waitForStart", (data) => { this.waitForStart(data) });
+        this.socket.on("randomTest", (data) => { this.randomTest(data) });
+
+        this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
     }
 
     waitForStart(data) {
@@ -15,6 +17,12 @@ class ServerConnectionManager {
 
     randomTest(data) {
         document.getElementById("rd").innerText = data;
+    }
+
+    gameEnd(msg){
+        this.socket.disconnect();
+        confirm(msg)
+        window.location.pathname = "/dashboard";
     }
     
     basicSetup() {

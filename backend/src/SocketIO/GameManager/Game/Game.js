@@ -9,6 +9,8 @@ class Game{
         this.gameManager = gameManager;
         this.code = code;
 
+        this.gameStart = false;
+
         /**@type {Array<SocketUser>} */
         this.players = []
 
@@ -20,10 +22,28 @@ class Game{
         }, 100);
     }
 
+    
+
+    /** @param {SocketUser} user */
     addUser(user){
         if(this.players.length >= 2) return 1;
 
         this.players.push(user);
+    }
+
+    /** @param {SocketUser} user */
+    leaveUser(user){
+        this.players.forEach((player, index) => {
+            if(player.id === user.id){
+                this.players.splice(index, 1);
+                return;
+            }
+        });
+
+        if(this.players.length != 2){
+            this.io.to(`game-${this.code}`).emit("gameEnd", "Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
+            return 1;
+        }
     }
 }
 

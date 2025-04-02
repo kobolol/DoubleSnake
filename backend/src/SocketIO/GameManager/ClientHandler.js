@@ -32,7 +32,7 @@ class ClientHandler {
     }
 
     defaultDisconnect(){
-        
+        this.gameManager.leaveGame(this.user, this.currentGameCode);
     }
 }
 
