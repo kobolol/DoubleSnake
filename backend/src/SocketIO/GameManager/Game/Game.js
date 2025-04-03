@@ -1,6 +1,7 @@
 const socketIO = require("socket.io");
 const SocketUser = require("../../Classes/SocketUser");
 const GameManager = require("../GameManager");
+const GameLoop = require("./GameLoop");
 
 class Game{
     /** @param {socketIO.Server} io @param {GameManager} gameManager @param {number} code */
@@ -10,24 +11,33 @@ class Game{
         this.code = code;
 
         this.waitingSeconds = 5;
-        this.gameStart = false;
+        this.gameStarted = false;
 
         /**@type {Array<SocketUser>} */
-        this.players = []
+        this.players = [];
 
-        setTimeout(() => { this.waitingForPlayers(true) }, 100)
+        this.gameLoop = new GameLoop(io, this);
+
+        setTimeout(() => { this.waitingForPlayers(true) }, 100);
+    }
+
+    startGame(){
+        
+        this.gameStarted = true;
     }
 
     waitingForPlayers(changeTime = false){
         if(this.waitingSeconds === 0){
             if(this.players.length < 2) {
-                this.io.to(`game-${this.code}`).emit("gameEnd", "Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!");
+                this.io.to(`game-${this.code}`).emit(
+                    "gameEnd", 
+                    "Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!"
+                );
                 this.gameManager.games.delete(this.code);
                 return;
             }
     
-            this.gameStart = true;
-            return this.io.to(`game-${this.code}`).emit("gameStart");
+            return this.startGame();
         }
 
         let msg = "";
