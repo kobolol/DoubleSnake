@@ -22,12 +22,13 @@ class Game{
     }
 
     startGame(){
-        
+        this.io.to(`game-${this.code}`).emit("startGame");
         this.gameStarted = true;
+        this.gameLoop.loop();
     }
 
     waitingForPlayers(changeTime = false){
-        if(this.waitingSeconds === 0){
+        if(this.waitingSeconds <= 0){
             if(this.players.length < 2) {
                 this.io.to(`game-${this.code}`).emit(
                     "gameEnd", 
@@ -55,8 +56,10 @@ class Game{
             waitingSeconds: this.waitingSeconds
         });
 
-        if (changeTime) this.waitingSeconds--;
-        setTimeout(() => { this.waitingForPlayers(true) }, 1000)
+        if (changeTime){
+            this.waitingSeconds--;
+            setTimeout(() => { this.waitingForPlayers(true) }, 1000);
+        }
     }
 
     

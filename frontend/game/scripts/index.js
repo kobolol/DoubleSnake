@@ -3,7 +3,7 @@ class ServerConnectionManager {
         /**@type {import("../../../backend/node_modules/socket.io-client".Socket} für Autocompletions VSC*/
         this.socket = io(`${window.location.protocol}//${window.location.hostname}:${window.location.port}`);
 
-        this.basicSetup();
+        this.body = document.getElementsByTagName("body")[0];
 
         // Socket.on Handler und Routen
         this.socket.on("waitingForPlayers", (msg) => {
@@ -11,8 +11,15 @@ class ServerConnectionManager {
             document.getElementById("wM").innerText = message;
             document.getElementById("wS").innerText = waitingSeconds;
         });
-
+        
         this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
+        this.socket.on("startGame", () => { this.startGame() });
+
+        this.basicSetup();
+    }
+
+    startGame(){
+        this.body.innerHTML = "<h1>Spielfeld</h1>";
     }
 
     gameEnd(msg){
