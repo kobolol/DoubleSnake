@@ -14,7 +14,7 @@ class ServerConnectionManager {
     }
 
     startGame(){
-        this.body.innerHTML = "<h1>Spielfeld</h1>";
+        this.body.innerHTML = "<h1>Spielfeld</h1>"; 
     }
 
     waitingForPlayers(data){
