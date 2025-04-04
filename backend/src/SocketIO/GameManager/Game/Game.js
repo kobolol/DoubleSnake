@@ -22,7 +22,10 @@ class Game{
     }
 
     startGame(){
-        this.io.to(`game-${this.code}`).emit("startGame");
+        this.io.to(`game-${this.code}`).emit("startGame", {
+            width: this.gameLoop.playground.width,
+            height: this.gameLoop.playground.height
+        });
         this.gameStarted = true;
         this.gameLoop.loop();
     }

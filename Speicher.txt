@@ -5,12 +5,6 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 <script src="/socket.io/socket.io.js"></script>
 
 
-DB
-php.himb.net
-Server: 192.168.178.62:5555
-root
-Jonas2007
-
 https://imagecolorchanger.com/upload-image
 
 UM Tabelle zu erstellen

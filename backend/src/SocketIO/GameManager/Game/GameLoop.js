@@ -14,7 +14,11 @@ class GameLoop{
     loop(){
         this.io.to(`game-${this.game.code}`).emit("loop", {
             code: this.game.code,
-            playground: this.playground
+            playground: {
+                height: this.playground.height,
+                width: this.playground.width,
+                tiles: this.playground.tiles,
+            }
         });
 
         setTimeout(() => {

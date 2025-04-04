@@ -1,3 +1,5 @@
+import Loop from "./Game/Loop.js";
+
 class ServerConnectionManager {
     constructor() {
         /**@type {import("../../../backend/node_modules/socket.io-client".Socket} für Autocompletions VSC*/
@@ -5,16 +7,29 @@ class ServerConnectionManager {
 
         this.body = document.getElementsByTagName("body")[0];
 
+        this.gameStarted = false;
+
+        this.loop = undefined;
+
         // Socket.on Handler und Routen
-        this.socket.on("startGame", () => { this.startGame() });
+        this.socket.on("startGame", (data) => { this.startGame(data) });
         this.socket.on("waitingForPlayers", (data) => { this.waitingForPlayers(data) });
         this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
 
         this.basicSetup();
     }
 
-    startGame(){
-        this.body.innerHTML = "<h1>Spielfeld</h1>"; 
+    startGame(tileSize){
+        this.gameStarted = true;
+        this.body.innerHTML = "";
+
+        const tilesDiv = document.createElement("div")
+        this.body.appendChild(tilesDiv);
+
+        tilesDiv.id="tiles";
+        tilesDiv.classList.add("container")
+
+        this.loop = new Loop(this.socket, tilesDiv, tileSize);
     }
 
     waitingForPlayers(data){

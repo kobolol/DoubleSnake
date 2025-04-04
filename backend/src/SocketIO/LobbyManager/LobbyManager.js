@@ -7,7 +7,7 @@ class LobbyManager {
     /** @param {socketIO.Server} io */
     constructor(io) {
         this.io = io;
-
+        
         /** @type {Map<string, Lobby>}*/
         this.lobbys = new Map();
 
