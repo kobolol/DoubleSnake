@@ -6,20 +6,20 @@ class ServerConnectionManager {
         this.body = document.getElementsByTagName("body")[0];
 
         // Socket.on Handler und Routen
-        this.socket.on("waitingForPlayers", (msg) => {
-            const { msg: message, waitingSeconds } = msg;
-            document.getElementById("wM").innerText = message;
-            document.getElementById("wS").innerText = waitingSeconds;
-        });
-        
-        this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
         this.socket.on("startGame", () => { this.startGame() });
+        this.socket.on("waitingForPlayers", (data) => { this.waitingForPlayers(data) });
+        this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
 
         this.basicSetup();
     }
 
     startGame(){
         this.body.innerHTML = "<h1>Spielfeld</h1>";
+    }
+
+    waitingForPlayers(data){
+        document.getElementById("wM").innerText = data.msg;
+        document.getElementById("wS").innerText = data.waitingSeconds;
     }
 
     gameEnd(msg){
