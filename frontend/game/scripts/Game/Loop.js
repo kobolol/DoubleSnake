@@ -1,10 +1,10 @@
-class Loop{
-    /**@param {import("../../../../backend/node_modules/socket.io-client".Socket} socket  @param {HTMLDivElement} tilesDiv Autocompletions VSC*/
-    constructor(socket, tilesDiv, tileSize){
-        this.socket = socket;
-        this.tilesDiv = tilesDiv;
+import Game from "./Game.js"
 
-        this.tileSize = tileSize;
+class Loop{
+    /**@param {import("../../../../backend/node_modules/socket.io-client".Socket} socket  @param {Game} game  Autocompletions VSC*/
+    constructor(socket, game){
+        this.socket = socket;
+        this.game = game;
 
         this.socket.on("loop", (data) => { this.loop(data) });
     }

@@ -1,4 +1,4 @@
-import Loop from "./Game/Loop.js";
+import Game from "./Game/Game.js";
 
 class ServerConnectionManager {
     constructor() {
@@ -7,29 +7,13 @@ class ServerConnectionManager {
 
         this.body = document.getElementsByTagName("body")[0];
 
-        this.gameStarted = false;
-
-        this.loop = undefined;
+        this.game = new Game(this.socket);
 
         // Socket.on Handler und Routen
-        this.socket.on("startGame", (data) => { this.startGame(data) });
         this.socket.on("waitingForPlayers", (data) => { this.waitingForPlayers(data) });
         this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
 
         this.basicSetup();
-    }
-
-    startGame(tileSize){
-        this.gameStarted = true;
-        this.body.innerHTML = "";
-
-        const tilesDiv = document.createElement("div")
-        this.body.appendChild(tilesDiv);
-
-        tilesDiv.id="tiles";
-        tilesDiv.classList.add("container")
-
-        this.loop = new Loop(this.socket, tilesDiv, tileSize);
     }
 
     waitingForPlayers(data){
