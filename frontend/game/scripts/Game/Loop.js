@@ -10,7 +10,23 @@ class Loop{
     }
 
     loop(data){
-         
+        this.game.playGround.resetOverlays();
+        const tiles = data.playground.tiles;
+
+        tiles.forEach((row, x) => {
+            row.forEach((tile, y) => {
+                if(!tile) return;
+                console.log(tile)
+                if(tile.class === "Snake"){
+                    /** @type {HTMLImageElement} */
+                    const tileImg = this.game.playGround.getOverlayTile(x, y);
+
+                    tileImg.src = `./assets/Snakes/${tile.color}/${tile.type}.png`;
+                    tileImg.style.display = "block"
+                    tileImg.style.transform = `rotate(${tile.deg}deg)`;
+                }
+            })
+        });
     }
 }
 

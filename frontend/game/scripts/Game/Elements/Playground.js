@@ -10,7 +10,7 @@ class Playground{
 
         this.tiles = [];
   
-        this.tileSize = window.innerHeight / playgroundSize.height;
+        this.tileSize = Math.floor(window.innerHeight / playgroundSize.height);
 
         this.setupTiles();
     }
@@ -24,19 +24,56 @@ class Playground{
             for(let u = 0; u < this.playgroundSize.height; u++){
                 const td = document.createElement("td");
 
+                // Container um Überlappung zu ermöglichen
+                const container = document.createElement("div");
+                container.style.position = "relative";
+                container.style.height = this.tileSize + "px";
+                container.style.width = this.tileSize + "px";
+
+                // Das Gras als Hintergrundbild
                 const bgImage = document.createElement("img");
-                (u % 2 == i % 2) ? bgImage.src = "./assets/Gras/Gras1.png" : bgImage.src = "./assets/Gras/Gras2.png";
+                bgImage.src = (u % 2 == i % 2) ? "./assets/Gras/Gras1.png" : "./assets/Gras/Gras2.png";
                 bgImage.height = this.tileSize;
                 bgImage.width = this.tileSize;
                 bgImage.classList.add("backgroundTile");
-                td.appendChild(bgImage);
+
+                // Je nach belieben Overlay-Bild
+                const overlayImage = document.createElement("img")
+                overlayImage.style.display = "none"
+                overlayImage.height = this.tileSize;
+                overlayImage.width = this.tileSize;
+                overlayImage.classList.add("overlayTile");
+
+                container.appendChild(bgImage);
+                container.appendChild(overlayImage);
+                td.appendChild(container);
                 row.appendChild(td);
 
-                rowTiles.push(td);
+                rowTiles.push(overlayImage);
             }
 
             this.tiles.push(rowTiles);
         }
+    }
+
+    getOverlayTile(x, y){
+        if (
+            y >= 0 && y < this.tiles.length &&
+            x >= 0 && x < this.tiles[y].length
+        ) {
+            return this.tiles[y][x];
+        }
+
+        return null;
+    }
+
+    resetOverlays(){
+        this.tiles.forEach(r => {
+            r.forEach(e => {
+                e.style.display = "none";
+                e.src = "";
+            })
+        })
     }
 }
 

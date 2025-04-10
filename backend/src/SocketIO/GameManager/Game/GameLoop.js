@@ -1,6 +1,7 @@
 const socketIO = require("socket.io");
 const Playground = require("./Classes/Playground/Playground");
 const Game = require("./Game");
+const Snake = require("./Classes/Snake/Snake");
 
 class GameLoop{
     /** @param {socketIO.Server} io @param {Game} game */
@@ -9,21 +10,28 @@ class GameLoop{
         this.game = game;
 
         this.playground = new Playground();
+        
+        /** @type {Array<Snake>} */
+        this.snakes = [];
     }
 
     loop(){
-        this.io.to(`game-${this.game.code}`).emit("loop", {
-            code: this.game.code,
-            playground: {
-                // height: this.playground.height,
-                // width: this.playground.width,
-                tiles: this.playground.tiles,
-            }
-        });
+        //this.snakes.forEach()
+
+        this.sendUpdate();
 
         setTimeout(() => {
             this.loop();
         }, 250);
+    }
+
+    sendUpdate(){
+        this.io.to(`game-${this.game.code}`).emit("loop", {
+            code: this.game.code,
+            playground: {
+                tiles: this.playground.tiles,
+            }
+        });
     }
 }
 

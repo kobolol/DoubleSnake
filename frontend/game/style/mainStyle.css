@@ -10,7 +10,44 @@ td, tr {
 
 td img {
     vertical-align: top;
+}
+
+img{
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+}
+
+#infoDiv{
+    background-color: rgba(0, 0, 0, 0.3);
+
+    position: absolute;
+    height: 75vh;
+    width: 15vw;
+
+    border: 5px solid rgba(255, 255, 255, 0.678);
+    border-radius: 25px;
+    right: 2.5vw;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.backgroundTile,
+.overlayTile {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.backgroundTile {
+    z-index: 0;
+}
+
+.overlayTile {
+    z-index: 1;
 }

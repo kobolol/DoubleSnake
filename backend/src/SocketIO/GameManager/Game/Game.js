@@ -2,6 +2,7 @@ const socketIO = require("socket.io");
 const SocketUser = require("../../Classes/SocketUser");
 const GameManager = require("../GameManager");
 const GameLoop = require("./GameLoop");
+const Snake = require("./Classes/Snake/Snake");
 
 class Game{
     /** @param {socketIO.Server} io @param {GameManager} gameManager @param {number} code */
@@ -12,6 +13,8 @@ class Game{
 
         this.waitingSeconds = 5;
         this.gameStarted = false;
+
+        this.snakeColors = ["red", "blue"];
 
         /**@type {Array<SocketUser>} */
         this.players = [];
@@ -27,6 +30,24 @@ class Game{
             height: this.gameLoop.playground.height
         });
         this.gameStarted = true;
+
+        // 2 Schlangen für die Spieler Instazieren
+        this.players.forEach((player, i) => {
+            const start = (10 * i + 5) - 1;
+            const snake = new Snake(
+                player,
+                this.gameLoop.playground,
+                this.snakeColors[i],
+                {
+                    x: start,
+                    y: start
+                },
+                i == 0 ? "right" : "left"
+            );
+
+            this.gameLoop.snakes.push(snake);
+        });
+
         this.gameLoop.loop();
     }
 

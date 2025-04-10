@@ -15,7 +15,10 @@ class Game{
 
         this.gameStarted = false;
 
+        this.ourColor = null;
+
         this.socket.on("startGame", (data) => { this.start(data) });
+        this.socket.on("color", (data) => { this.setOutColor(data) })
     }
 
     start(playgroundSize){
@@ -24,6 +27,12 @@ class Game{
 
         this.movementHandler = new MovementHandler(this.socket);
         this.playGround = new Playground(this, this.uiManager, playgroundSize);
+    }
+
+    setOutColor(color){
+        this.ourColor = color;
+
+        this.uiManager.addSnakeColorInfo(color);
     }
 }
 

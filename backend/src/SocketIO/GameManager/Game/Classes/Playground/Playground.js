@@ -5,21 +5,20 @@ class Playground {
         this.height = 20;
 
         /** @type {Array<Array>} */
-        this.tiles = this.createPlayground();
+        this.tiles = [];
+
+        this.resetPlayground();
     }
 
-    createPlayground(){
-        const tilesArray = [];
-        
+    resetPlayground(){
+        this.tiles = [];
         for (let i = 0; i < this.width; i++) {
             const column = [];
             for (let j = 0; j < this.height; j++) {
                 column.push(null);
             }
-            tilesArray.push(column);
+            this.tiles.push(column);
         }
-
-        return tilesArray;
     }
 
     getTile(x, y){
