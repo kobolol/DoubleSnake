@@ -10,4 +10,7 @@ td, tr {
 
 td img {
     vertical-align: top;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }

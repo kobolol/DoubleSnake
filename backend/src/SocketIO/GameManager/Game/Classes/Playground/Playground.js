@@ -1,5 +1,5 @@
 class Playground {
-    constructor() {
+    constructor(){
         // Spielgröße (width * height) Felder
         this.width = 20;
         this.height = 20;
@@ -8,7 +8,7 @@ class Playground {
         this.tiles = this.createPlayground();
     }
 
-    createPlayground() {
+    createPlayground(){
         const tilesArray = [];
         
         for (let i = 0; i < this.width; i++) {
@@ -22,14 +22,14 @@ class Playground {
         return tilesArray;
     }
 
-    getTile(x, y) {
+    getTile(x, y){
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             return null; // Ungültiges feld
         }
         return this.tiles[x][y];
     }
 
-    setTile(x, y, object) {
+    setTile(x, y, object){
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
             return false; // Ungültiges feld
         }
