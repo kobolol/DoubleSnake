@@ -40,7 +40,7 @@ class MovementHandler{
 
         if(!direction) return;
 
-        console.log(direction);
+        this.socket.emit("movement", direction);
     }
 }
 
