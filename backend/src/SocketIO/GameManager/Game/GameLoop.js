@@ -16,7 +16,9 @@ class GameLoop{
     }
 
     loop(){
-        //this.snakes.forEach()
+        this.playground.resetPlayground();
+        
+        this.snakes.forEach(snake => { snake.move() });
 
         this.sendUpdate();
 

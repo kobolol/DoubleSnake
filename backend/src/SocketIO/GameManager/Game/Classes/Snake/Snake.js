@@ -8,8 +8,10 @@ class Snake{
         this.playground = playground;
         this.color = color;
         
+        /** @type {Array<Object>} */
         this.tiles = [];
         this.nextMovement = startMovement;
+        this.currentMovement = null;
 
         this.directionDegree = new Map([
             ["right", 0],
@@ -62,8 +64,83 @@ class Snake{
         }
 
         this.drawTiles();
+    }
 
-        console.log(this.tiles);
+    movementToAxes(movement){
+        let num = null;
+        let axes = null;
+        switch (movement) {
+            case "up": num = -1; axes = "y"; break;
+            case "down": num = 1; axes = "y"; break;
+            case "left": num = -1; axes = "x"; break;
+            case "right": num = 1; axes = "x"; break;
+        }
+
+        return {num, axes};
+    }
+
+    move(){
+        // Aktuelles Movement Klonen nicht das es zwischendurch geändert wird
+        if(
+            this.movementToAxes(this.nextMovement).axes
+             !== 
+            this.movementToAxes(this.currentMovement).axes
+        ){
+            this.currentMovement = this.nextMovement;
+        }
+        // Eine Kopie der aktuellen Tiles erstellen
+        const tileClone = this.tiles.map(tile => ({ ...tile }));
+        this.tiles = []
+
+        tileClone.forEach((tile, i) => {
+            const currentTile = { ...tile };
+            if(i === 0){
+                const axes = this.movementToAxes(this.currentMovement);
+                if(axes.axes === "x") currentTile.x += axes.num;
+                if(axes.axes === "y") currentTile.y += axes.num;
+                currentTile.deg = this.directionDegree.get(this.currentMovement);
+                return this.tiles.push(currentTile);
+            }
+
+            let tileBefore = { ...tileClone[i - 1] };
+            currentTile.deg = tileBefore.deg;
+            currentTile.x = tileBefore.x;
+            currentTile.y = tileBefore.y;
+
+            this.tiles.push(currentTile);
+        })
+
+        // Ändere nun geraden zu Kurven
+        this.tiles.forEach((tile, i) => {
+            if(i === 0 || i === (this.tiles.length - 1)) return;
+            const before = this.tiles[i - 1];
+            const after = this.tiles[i + 1];
+
+            const dxBefore = tile.x - before.x;
+            const dyBefore = tile.y - before.y;
+            const dxAfter = tile.x - after.x;
+            const dyAfter = tile.y - after.y;
+
+            if (dxBefore !== dxAfter && dyBefore !== dyAfter) {
+                tile.type = "Turn";
+            
+                if (dxBefore === -1 && dyAfter === -1 || dxAfter === -1 && dyBefore === -1) {
+                    tile.deg = 0;
+                } else if (dxBefore === 1 && dyAfter === -1 || dxAfter === 1 && dyBefore === -1) {
+                    tile.deg = 90;
+                } else if (dxBefore === 1 && dyAfter === 1 || dxAfter === 1 && dyBefore === 1) {
+                    tile.deg = 180;
+                } else if (dxBefore === -1 && dyAfter === 1 || dxAfter === -1 && dyBefore === 1) {
+                    tile.deg = 270;
+                }
+            
+            } else {
+                tile.type = "Straight";
+            }
+
+        })
+
+        this.drawTiles();
     }
 
     drawTiles(){
@@ -73,7 +150,7 @@ class Snake{
     }
 
     updateNextMovement(data){
-        console.log(`${this.player.username} | ${this.nextMovement}`);
+        this.nextMovement = data;
     }
 }
 
