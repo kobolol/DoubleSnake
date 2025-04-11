@@ -92,6 +92,7 @@ class Snake{
         const tileClone = this.tiles.map(tile => ({ ...tile }));
         this.tiles = []
 
+        // alle tiles nach vorne bewegen
         tileClone.forEach((tile, i) => {
             const currentTile = { ...tile };
             if(i === 0){
@@ -110,7 +111,7 @@ class Snake{
             this.tiles.push(currentTile);
         })
 
-        // Ändere nun geraden zu Kurven
+        // Ändere nun geraden zu Kurven wenn nötig
         this.tiles.forEach((tile, i) => {
             if(i === 0 || i === (this.tiles.length - 1)) return;
             const before = this.tiles[i - 1];
