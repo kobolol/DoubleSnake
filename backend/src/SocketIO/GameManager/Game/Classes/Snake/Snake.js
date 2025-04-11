@@ -7,6 +7,7 @@ class Snake{
         this.player = player;
         this.playground = playground;
         this.color = color;
+        this.startLength = 5;
         
         /** @type {Array<Object>} */
         this.tiles = [];
@@ -40,13 +41,13 @@ class Snake{
             case "right": dx = -1; break;
         }
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < this.startLength; i++) {
             let type = null;
             switch(i){
                 case 0: 
                     type = "Head"; 
                     break;
-                case 2: 
+                case this.startLength - 1: 
                     type = "End"; 
                     break;
                 default: 
@@ -140,6 +141,18 @@ class Snake{
             }
 
         })
+
+        // EndTile korrekt drehen
+        const end = this.tiles[this.tiles.length - 1];
+        const beforeEnd = this.tiles[this.tiles.length - 2];
+
+        const dx = end.x - beforeEnd.x;
+        const dy = end.y - beforeEnd.y;
+
+        if (dx === 1) end.deg = 180;
+        else if (dx === -1) end.deg = 0;
+        else if (dy === 1) end.deg = 270;
+        else if (dy === -1) end.deg = 90;
 
         this.drawTiles();
     }
