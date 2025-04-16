@@ -2,7 +2,7 @@ class UIManager{
     constructor(){
         this.mainDiv = document.getElementById("mainMenu");
 
-        this.gameTable = undefined;
+        this.gameCanvasDiv = undefined;
     }
 
     // Erstellen des Grundgerüstes der UI
@@ -14,9 +14,10 @@ class UIManager{
         body.style.backgroundRepeat = "no-repeat";
         body.style.backgroundColor = "#3b3b3f";
 
-        this.gameTable = document.createElement("table");
+        this.gameCanvasDiv = document.createElement("div");
+        this.gameCanvasDiv.id = "gameCanvasDiv"
 
-        this.mainDiv.appendChild(this.gameTable);
+        this.mainDiv.appendChild(this.gameCanvasDiv);
     }
 
     // Erstellen der Info für welche Schlange man ist

@@ -1,3 +1,4 @@
+import Overlay from "./Elements/Overlay.js";
 import Game from "./Game.js"
 
 class Loop{
@@ -10,23 +11,24 @@ class Loop{
     }
 
     loop(data){
-        this.game.playGround.resetOverlays();
+        this.game.playGround.resetOverlay();
         const tiles = data.playground.tiles;
 
         tiles.forEach((row, x) => {
             row.forEach((tile, y) => {
                 if(!tile) return;
-                console.log(tile)
                 if(tile.class === "Snake"){
-                    /** @type {HTMLImageElement} */
-                    const tileImg = this.game.playGround.getOverlayTile(x, y);
+                    const overlay = new Overlay(
+                        `./assets/Snakes/${tile.color}/${tile.type}.png`,
+                        tile.deg
+                    )
 
-                    tileImg.src = `./assets/Snakes/${tile.color}/${tile.type}.png`;
-                    tileImg.style.display = "block"
-                    tileImg.style.transform = `rotate(${tile.deg}deg)`;
+                    this.game.playGround.setOverlay(x, y, overlay);
                 }
             })
         });
+
+        this.game.playGround.draw();
     }
 }
 

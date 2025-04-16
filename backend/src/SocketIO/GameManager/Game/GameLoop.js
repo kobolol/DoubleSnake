@@ -24,7 +24,7 @@ class GameLoop{
 
         setTimeout(() => {
             this.loop();
-        }, 250);
+        }, 125);
     }
 
     sendUpdate(){

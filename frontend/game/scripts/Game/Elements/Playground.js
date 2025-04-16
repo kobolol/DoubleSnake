@@ -1,5 +1,6 @@
 import UIManager from "../UI/UIManager.js";
 import Game from "../Game.js";
+import Overlay from "./Overlay.js";
 
 class Playground{
     /**@param {import(Game} game @param {UIManager} uiManager */
@@ -7,73 +8,79 @@ class Playground{
         this.playgroundSize = playgroundSize;
         this.game = game;
         this.uiManager = uiManager;
-
-        this.tiles = [];
   
         this.tileSize = Math.floor(window.innerHeight / playgroundSize.height);
 
-        this.setupTiles();
-    }
+        // Canvas erstellen
+        this.canvas = document.createElement("canvas");
+        this.canvas.height = this.playgroundSize.height * this.tileSize;
+        this.canvas.width = this.playgroundSize.width * this.tileSize;
+        this.uiManager.gameCanvasDiv.appendChild(this.canvas);
 
-    setupTiles(){
-        for(let i = 0; i < this.playgroundSize.width; i++){
-            const row = document.createElement("tr");
-            let rowTiles = [];
-            this.uiManager.gameTable.appendChild(row);
+        this.ctx = this.canvas.getContext("2d");
 
-            for(let u = 0; u < this.playgroundSize.height; u++){
-                const td = document.createElement("td");
+        // Hintergrund Bilder Laden
+        this.bgImage1 = new Image();
+        this.bgImage1.src = "./assets/Gras/Gras1.png";
+        this.bgImage2 = new Image();
+        this.bgImage2.src = "./assets/Gras/Gras2.png";
 
-                // Container um Überlappung zu ermöglichen
-                const container = document.createElement("div");
-                container.style.position = "relative";
-                container.style.height = this.tileSize + "px";
-                container.style.width = this.tileSize + "px";
+        // Overlays Also Schlangen und Früchte erstellen
+        /** @type {Array<Array<Overlay>>} */
+        this.overlays = [];
 
-                // Das Gras als Hintergrundbild
-                const bgImage = document.createElement("img");
-                bgImage.src = (u % 2 == i % 2) ? "./assets/Gras/Gras1.png" : "./assets/Gras/Gras2.png";
-                bgImage.height = this.tileSize;
-                bgImage.width = this.tileSize;
-                bgImage.classList.add("backgroundTile");
-
-                // Je nach belieben Overlay-Bild
-                const overlayImage = document.createElement("img")
-                overlayImage.style.display = "none"
-                overlayImage.height = this.tileSize;
-                overlayImage.width = this.tileSize;
-                overlayImage.classList.add("overlayTile");
-
-                container.appendChild(bgImage);
-                container.appendChild(overlayImage);
-                td.appendChild(container);
-                row.appendChild(td);
-
-                rowTiles.push(overlayImage);
+        for(let y = 0; y < this.playgroundSize.height; y++){
+            const row = [];
+            for(let x = 0; x < this.playgroundSize.width; x++){
+                const overlay = new Overlay();
+                row.push(overlay);
             }
-
-            this.tiles.push(rowTiles);
+            this.overlays.push(row);
         }
     }
 
-    getOverlayTile(x, y){
-        if (
-            y >= 0 && y < this.tiles.length &&
-            x >= 0 && x < this.tiles[y].length
-        ) {
-            return this.tiles[y][x];
-        }
+    draw () {
+        // Canvas leeren
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        return null;
+        // Jedes Tile / Overlay durchgehen und erst background dann falls da Overlay rendern
+        for(let y = 0; y < this.playgroundSize.height; y++){
+            for (let x = 0; x < this.playgroundSize.width; x++){
+                const posX = x * this.tileSize;
+                const posY = y * this.tileSize;
+
+                // Hintergrund rendern
+                const bgImage = ((x % 2) === (y % 2)) ? this.bgImage1 : this.bgImage2;
+                this.ctx.drawImage(bgImage, posX, posY, this.tileSize, this.tileSize);
+
+                // Falls overlay vorhanden darauf rendern
+                const overlay = this.overlays[y][x];
+                if(!overlay.src) continue;
+                this.ctx.save();
+
+                // Rotation anwenden | Bisschen Komplexes Mathe Funzt :)
+                const centerX = posX + this.tileSize / 2;
+                const centerY = posY + this.tileSize / 2;
+                this.ctx.translate(centerX, centerY);
+                const rotation = (overlay.deg) * Math.PI / 180;
+                this.ctx.rotate(rotation);
+                this.ctx.drawImage(overlay.image, -this.tileSize / 2, -this.tileSize / 2, this.tileSize, this.tileSize);
+                this.ctx.restore();
+            }
+        }
     }
 
-    resetOverlays(){
-        this.tiles.forEach(r => {
-            r.forEach(e => {
-                e.style.display = "none";
-                e.src = "";
+    resetOverlay(){
+        this.overlays.forEach(row => {
+            row.forEach(overlay => {
+                overlay.src = null;
+                overlay.deg = 0;
             })
         })
+    }
+
+    setOverlay(x, y, newOverlay){
+        this.overlays[y][x] = newOverlay;
     }
 }
 
