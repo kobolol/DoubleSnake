@@ -36,18 +36,3 @@ img{
     align-items: center;
     justify-content: space-evenly;
 }
-
-.backgroundTile,
-.overlayTile {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.backgroundTile {
-    z-index: 0;
-}
-
-.overlayTile {
-    z-index: 1;
-}

@@ -9,7 +9,7 @@ class Playground{
         this.game = game;
         this.uiManager = uiManager;
   
-        this.tileSize = Math.floor(window.innerHeight / playgroundSize.height);
+        this.tileSize = Math.floor((window.innerHeight - 10) / playgroundSize.height);
 
         // Canvas erstellen
         this.canvas = document.createElement("canvas");
