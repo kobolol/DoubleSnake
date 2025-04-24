@@ -1,11 +1,13 @@
 const SocketUser = require("../../../../Classes/SocketUser");
+const Game = require("../../Game");
 const Playground = require("../Playground/Playground");
 
 class Snake{
-    /** @param {SocketUser} player @param {Playground} playground */
-    constructor(player, playground, color, startTiles, startMovement) {
+    /** @param {SocketUser} player @param {Playground} playground @param {Game} game */
+    constructor(player, playground, game, color, startTiles, startMovement) {
         this.player = player;
         this.playground = playground;
+        this.game = game;
         this.color = color;
         this.startLength = 5;
         
@@ -64,7 +66,7 @@ class Snake{
             });
         }
 
-        this.drawTiles();
+        this.checkAndDrawTiles();
     }
 
     movementToAxes(movement){
@@ -154,11 +156,23 @@ class Snake{
         else if (dy === 1) end.deg = 270;
         else if (dy === -1) end.deg = 90;
 
-        this.drawTiles();
+        this.checkAndDrawTiles();
     }
 
-    drawTiles(){
+    checkAndDrawTiles(){
         this.tiles.forEach(tile => {
+            const exsitingtile = this.playground.getTile(tile.x, tile.y);
+
+            // TODO: Solang Entfernt kann man alleine Testen
+            // if(exsitingtile === undefined){
+            //     // End Game weil außerhalb des Spielfeldes
+            //     this.game.endGame(`${this.player.username} hat die Wand berührt!`)
+            // }
+            // if(exsitingtile?.class === "Snake"){
+            //     // Eng Game weil schon belegt mit anderer oder eigender Schlange
+            //     this.game.endGame(`Ihr seit koolidiert!`)
+            // }
+
             this.playground.setTile(tile.x, tile.y, tile);
         })
     }

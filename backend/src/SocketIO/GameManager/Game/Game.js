@@ -11,6 +11,8 @@ class Game{
         this.gameManager = gameManager;
         this.code = code;
 
+        this.score = 0;
+
         this.waitingSeconds = 5;
         this.gameStarted = false;
 
@@ -37,6 +39,7 @@ class Game{
             const snake = new Snake(
                 player,
                 this.gameLoop.playground,
+                this,
                 this.snakeColors[i],
                 {
                     x: start,
@@ -51,13 +54,14 @@ class Game{
         this.gameLoop.loop();
     }
 
+    endGame(msg){
+        this.io.to(`game-${this.code}`).emit("gameEnd", msg);
+    }
+
     waitingForPlayers(changeTime = false){
         if(this.waitingSeconds <= 0){
             if(this.players.length < 2) {
-                this.io.to(`game-${this.code}`).emit(
-                    "gameEnd", 
-                    "Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!"
-                );
+                this.endGame("Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!");
                 this.gameManager.games.delete(this.code);
                 return;
             }
@@ -68,7 +72,7 @@ class Game{
         let msg = "";
         this.players.forEach(player => {
             if(msg === ""){
-                msg = `Schon beigetreten sind: ${player.username}`;
+                msg = `Schon beigetreten: ${player.username}`;
             }
             else{
                 msg += ` und ${player.username}, es geht Sofort los!`;
@@ -107,7 +111,7 @@ class Game{
         });
 
         if(this.players.length != 2){
-            this.io.to(`game-${this.code}`).emit("gameEnd", "Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
+            this.endGame("gameEnd", "Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
             return 1;
         }
     }

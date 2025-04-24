@@ -1,12 +1,14 @@
 class UIManager{
     constructor(){
         this.mainDiv = document.getElementById("mainMenu");
+        this.score = undefined;
 
         this.gameCanvasDiv = undefined;
     }
 
     // Erstellen des Grundgerüstes der UI
     loadGameContent(){
+        // Spielfeld erstellen
         this.mainDiv.innerHTML = "";
 
         const body = document.body;
@@ -18,15 +20,32 @@ class UIManager{
         this.gameCanvasDiv.id = "gameCanvasDiv"
 
         this.mainDiv.appendChild(this.gameCanvasDiv);
+
+        // Punktestand erstellen
+        const scoreDiv = document.createElement("div");
+        scoreDiv.id = "scoreDiv";
+        scoreDiv.classList.add("gameShow");
+
+        const title = document.createElement("h2");
+        title.innerText = "Punktestand:";
+        scoreDiv.appendChild(title);
+
+        this.score = document.createElement("h1");
+        this.score.id = "scoreText"
+        this.score.innerText = "0";
+        scoreDiv.appendChild(this.score);
+
+        this.mainDiv.appendChild(scoreDiv);
     }
 
     // Erstellen der Info für welche Schlange man ist
     addSnakeColorInfo(color){
         const infoDiv = document.createElement("div");
-        infoDiv.id = "infoDiv"
+        infoDiv.id = "infoDiv";
+        infoDiv.classList.add("gameShow");
 
-        const header = document.createElement("h1")
-        header.innerText = "Deine Schlange:"
+        const header = document.createElement("h1");
+        header.innerText = "Deine Schlange:";
         infoDiv.appendChild(header);
 
         const snakeTable = document.createElement("table");

@@ -14,6 +14,7 @@ class Loop{
         this.game.playGround.resetOverlay();
         const tiles = data.playground.tiles;
 
+        // Spielfeld Zeichenen
         tiles.forEach((row, x) => {
             row.forEach((tile, y) => {
                 if(!tile) return;
@@ -25,8 +26,18 @@ class Loop{
 
                     this.game.playGround.setOverlay(x, y, overlay);
                 }
+                else if(tile.class === "Fruit"){
+                    const overlay = new Overlay(
+                        `./assets/Früchte/${tile.type}.png`
+                    )
+
+                    this.game.playGround.setOverlay(x, y, overlay);
+                }
             })
         });
+
+        // Score Anzeigen
+        this.game.uiManager.score.innerText = `${data.score}`;
 
         this.game.playGround.draw();
     }

@@ -2,6 +2,7 @@ const socketIO = require("socket.io");
 const Playground = require("./Classes/Playground/Playground");
 const Game = require("./Game");
 const Snake = require("./Classes/Snake/Snake");
+const FruitManager = require("./Classes/Fruits/FruitManager");
 
 class GameLoop{
     /** @param {socketIO.Server} io @param {Game} game */
@@ -13,12 +14,15 @@ class GameLoop{
         
         /** @type {Array<Snake>} */
         this.snakes = [];
+
+        this.fruitManager = new FruitManager(this.io, this.game, this.playground);
     }
 
     loop(){
         this.playground.resetPlayground();
         
-        this.snakes.forEach(snake => { snake.move() });
+        this.snakes.forEach(snake => { snake.move()});
+        this.fruitManager.updateFruits();
 
         this.sendUpdate();
 
@@ -30,6 +34,7 @@ class GameLoop{
     sendUpdate(){
         this.io.to(`game-${this.game.code}`).emit("loop", {
             code: this.game.code,
+            score: this.game.score,
             playground: {
                 tiles: this.playground.tiles,
             }
