@@ -14,7 +14,7 @@ class Loop{
         this.game.playGround.resetOverlay();
         const tiles = data.playground.tiles;
 
-        // Spielfeld Zeichenen
+        // Spielfeld Zeichenen TODO: Image Laden Bug Fixen
         tiles.forEach((row, x) => {
             row.forEach((tile, y) => {
                 if(!tile) return;

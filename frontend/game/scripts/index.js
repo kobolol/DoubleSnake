@@ -11,7 +11,7 @@ class ServerConnectionManager {
 
         // Socket.on Handler und Routen
         this.socket.on("waitingForPlayers", (data) => { this.waitingForPlayers(data) });
-        this.socket.on("gameEnd", (msg) => { this.gameEnd(msg) });
+        this.socket.on("gameEnd", (data) => { this.gameEnd(data) });
 
         this.basicSetup();
     }
@@ -21,10 +21,11 @@ class ServerConnectionManager {
         document.getElementById("wS").innerText = data.waitingSeconds;
     }
 
-    gameEnd(msg){
+    gameEnd(data){
+        // Sonst passiert das unten bei basicSetup und wir werden weitergeleitet
+        this.socket.off("disconnect");
         this.socket.disconnect();
-        confirm(msg)
-        window.location.pathname = "/dashboard";
+        this.game.uiManager.showEndScreen(data);
     }
     
     basicSetup() {

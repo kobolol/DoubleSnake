@@ -20,7 +20,7 @@ class Fruit{
         if(tile === undefined) return;
 
         if(tile?.class === "Snake"){
-            this.fruitManager.scored(this.index);
+            this.fruitManager.scored(this.index, tile.color);
 
             return;
         }

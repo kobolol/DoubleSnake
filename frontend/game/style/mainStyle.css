@@ -48,3 +48,57 @@ img{
     align-items: center;
     justify-content: space-evenly;
 }
+
+#endDivOverlay{
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#endDiv{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    border: 5px solid white;
+    
+    height: 60vh;
+    width: 40vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#endDiv h1{
+    font-size: 60px;
+}
+
+#scoreEndDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 150px;
+}
+
+#scoreEndDiv h3{
+    font-size: 30px;
+}
+
+#scoreEndDiv h2{
+    font-size: 40px;
+    font-weight: 900;
+}
+
+#reason{
+    color: rgb(197, 46, 46);
+    font-weight: 700;
+}

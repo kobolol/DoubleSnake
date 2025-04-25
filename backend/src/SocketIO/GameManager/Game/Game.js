@@ -55,7 +55,12 @@ class Game{
     }
 
     endGame(msg){
-        this.io.to(`game-${this.code}`).emit("gameEnd", msg);
+        this.io.to(`game-${this.code}`).emit("gameEnd", {
+            msg: msg,
+            score: this.score,
+        });
+
+        // TODO: Spielende in die Datenbank eintragen 
     }
 
     waitingForPlayers(changeTime = false){
@@ -111,7 +116,7 @@ class Game{
         });
 
         if(this.players.length != 2){
-            this.endGame("gameEnd", "Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
+            this.endGame("Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
             return 1;
         }
     }

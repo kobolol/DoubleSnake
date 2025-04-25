@@ -60,8 +60,12 @@ class FruitManager{
         this.fruits.forEach(fruit => fruit.update());
     }
 
-    scored(fruitIndex){
+    scored(fruitIndex, snakeColor){
         this.game.score += 1;
+
+        this.game.gameLoop.snakes.forEach(snake => {
+            if(snake.color == snakeColor) snake.getBigger();
+        })
 
         this.fruits.splice(fruitIndex, 1);
 

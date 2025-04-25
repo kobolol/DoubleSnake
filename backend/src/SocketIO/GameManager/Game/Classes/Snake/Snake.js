@@ -159,19 +159,41 @@ class Snake{
         this.checkAndDrawTiles();
     }
 
+    getBigger(){
+        const end = this.tiles[this.tiles.length - 1];
+        const beforeEnd = this.tiles[this.tiles.length - 2];
+        
+        // So setzen wir das neue Tile hinter dem Letzen auf der Richtigen Seite
+        const dx = end.x - beforeEnd.x;
+        const dy = end.y - beforeEnd.y;
+    
+        const newEnd = {
+            class: "Snake",
+            type: "End",
+            color: this.color,
+            deg: end.deg,
+            x: end.x + dx,
+            y: end.y + dy
+        };
+    
+        end.type = "Straight";
+    
+        this.tiles.push(newEnd);
+    }
+
     checkAndDrawTiles(){
         this.tiles.forEach(tile => {
             const exsitingtile = this.playground.getTile(tile.x, tile.y);
 
-            // TODO: Solang Entfernt kann man alleine Testen
-            // if(exsitingtile === undefined){
-            //     // End Game weil außerhalb des Spielfeldes
-            //     this.game.endGame(`${this.player.username} hat die Wand berührt!`)
-            // }
-            // if(exsitingtile?.class === "Snake"){
-            //     // Eng Game weil schon belegt mit anderer oder eigender Schlange
-            //     this.game.endGame(`Ihr seit koolidiert!`)
-            // }
+            // TODO: Klammert man das ein Kann man alleine Spielen, da es keine Kolisionserkennung gibt
+            if(exsitingtile === undefined){
+                // End Game weil außerhalb des Spielfeldes
+                this.game.endGame(`${this.player.username} hat die Wand berührt!`)
+            }
+            if(exsitingtile?.class === "Snake"){
+                // Eng Game weil schon belegt mit anderer oder eigender Schlange
+                this.game.endGame(`Ihr seit koolidiert!`)
+            }
 
             this.playground.setTile(tile.x, tile.y, tile);
         })
