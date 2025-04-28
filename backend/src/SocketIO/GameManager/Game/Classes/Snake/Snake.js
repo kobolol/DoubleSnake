@@ -28,7 +28,7 @@ class Snake{
         this.setup(startTiles);
     }
 
-    setup(startTiles){
+    async setup(startTiles){
         this.player.socket.emit("color", this.color);
 
         const headX = startTiles.x;
@@ -66,7 +66,7 @@ class Snake{
             });
         }
 
-        this.checkAndDrawTiles();
+        await this.checkAndDrawTiles();
     }
 
     movementToAxes(movement){
@@ -82,7 +82,7 @@ class Snake{
         return {num, axes};
     }
 
-    move(){
+    async move(){
         // Aktuelles Movement Klonen nicht das es zwischendurch geändert wird
         if(
             this.movementToAxes(this.nextMovement).axes
@@ -156,7 +156,7 @@ class Snake{
         else if (dy === 1) end.deg = 270;
         else if (dy === -1) end.deg = 90;
 
-        this.checkAndDrawTiles();
+        await this.checkAndDrawTiles();
     }
 
     getBigger(){
@@ -181,22 +181,24 @@ class Snake{
         this.tiles.push(newEnd);
     }
 
-    checkAndDrawTiles(){
-        this.tiles.forEach(tile => {
+    async checkAndDrawTiles(){
+        for (const tile of this.tiles) {
             const exsitingtile = this.playground.getTile(tile.x, tile.y);
-
+    
             // TODO: Klammert man das ein Kann man alleine Spielen, da es keine Kolisionserkennung gibt
             if(exsitingtile === undefined){
                 // End Game weil außerhalb des Spielfeldes
-                this.game.endGame(`${this.player.username} hat die Wand berührt!`)
+                await this.game.endGame(`${this.player.username} hat die Wand berührt!`);
+                return;
             }
             if(exsitingtile?.class === "Snake"){
                 // Eng Game weil schon belegt mit anderer oder eigender Schlange
-                this.game.endGame(`Es gab eine Kollision!`)
+                await this.game.endGame(`Es gab eine Kollision!`);
+                return;
             }
-
+    
             this.playground.setTile(tile.x, tile.y, tile);
-        })
+        }
     }
 
     updateNextMovement(data){

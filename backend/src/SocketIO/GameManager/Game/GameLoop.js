@@ -18,17 +18,19 @@ class GameLoop{
         this.fruitManager = new FruitManager(this.io, this.game, this.playground);
     }
 
-    loop(){
+    async loop(){
         this.playground.resetPlayground();
         
-        this.snakes.forEach(snake => { snake.move()});
+        await Promise.all(this.snakes.map(snake => snake.move()));
         this.fruitManager.updateFruits();
 
         this.sendUpdate();
 
-        setTimeout(() => {
-            this.loop();
-        }, 125);
+        if(this.game.gameStarted){
+            setTimeout(() => {
+                this.loop();
+            }, 125);
+        }
     }
 
     sendUpdate(){

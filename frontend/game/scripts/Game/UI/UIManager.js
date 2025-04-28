@@ -107,6 +107,10 @@ class UIManager{
         const score = document.createElement("h2");
         score.innerText = data.score;
         scoreDiv.appendChild(score);
+        const rang = document.createElement("h2");
+        rang.innerText = `Bestenliste Platz: ${data.rang}`;
+        rang.style.color = "rgb(255, 223, 0)";
+        scoreDiv.appendChild(rang);
         endDiv.appendChild(scoreDiv);
 
         const dashButton = document.createElement("button");

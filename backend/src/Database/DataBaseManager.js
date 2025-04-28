@@ -1,5 +1,6 @@
 const mySql = require("mysql2");
 const UserManager = require("./UserManager/UserManager");
+const ScoreManager = require("./ScoreManager/ScoreManager");
 require("dotenv").config();
 
 class DataBaseManager {
@@ -20,6 +21,7 @@ class DataBaseManager {
         });
 
         this.usermanager = new UserManager(this.connection);
+        this.scoremanager = new ScoreManager(this.connection);
     }
 }
 

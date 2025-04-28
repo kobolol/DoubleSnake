@@ -47,6 +47,26 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `fullName`, `created
 (2, 'test2', 'test2@gmail.com', '$2b$10$fRrqNkFVA4TIyy61ovgPae83drW6oZOCND94BErwthKmt1MxzgTci', 'Test Person 2', '2025-03-22 19:48:45'),
 (3, 'test3', NULL, '$2b$10$5QEkQuI/HxnaNovp8XPbnOnkuPpfSLdjwyqXMXKCB5oHZQR3ILTkq', NULL, '2025-03-22 19:48:51');
 
+-- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `scores`
+--
+
+CREATE TABLE `scores` (
+  `id` int(11) NOT NULL,
+  `user1` int(11) NOT NULL,
+  `user2` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- Daten für Tabelle `scores`
+--
+
+INSERT INTO `scores` (`id`, `user1`, `user2`, `score`, `time`) VALUES
+(1, 1, 2, 100, '2025-03-22 20:00:00'),
+(2, 2, 3, 150, '2025-03-22 20:15:00'),
+(3, 1, 3, 200, '2025-03-22 20:30:00');
 --
 -- Indizes der exportierten Tabellen
 --
@@ -59,6 +79,14 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indizes für die Tabelle `scores`
+--
+ALTER TABLE `scores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user1` (`user1`),
+  ADD KEY `user2` (`user2`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
@@ -67,6 +95,19 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT für Tabelle `scores`
+--
+ALTER TABLE `scores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints der Tabelle `scores`
+--
+ALTER TABLE `scores`
+  ADD CONSTRAINT `scores_ibfk_1` FOREIGN KEY (`user1`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`user2`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

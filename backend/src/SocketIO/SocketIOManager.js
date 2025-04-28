@@ -31,7 +31,7 @@ class SocketIOManager {
             Der LobbyManager kümmert sich um alle Lobbys
          */
         this.lobbyManager = new LobbyManager(this.io);
-        this.gameManager = new GameManager(this.io, this.lobbyManager);
+        this.gameManager = new GameManager(this.io, this.db, this.lobbyManager);
 
         this.io.on("connection", (socket) => { this.sendToRightManager(socket) });
 

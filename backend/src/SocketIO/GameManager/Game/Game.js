@@ -21,6 +21,9 @@ class Game{
         /**@type {Array<SocketUser>} */
         this.players = [];
 
+        /**@type {Array<SocketUser>} */
+        this.playerIds = [];
+
         this.gameLoop = new GameLoop(io, this);
 
         setTimeout(() => { this.waitingForPlayers(true) }, 100);
@@ -35,6 +38,9 @@ class Game{
 
         // 2 Schlangen für die Spieler Instazieren
         this.players.forEach((player, i) => {
+            // id pushen um nachher das Endgame zu beenden
+            this.playerIds.push(player.id);
+
             const start = (10 * i + 5) - 1;
             const snake = new Snake(
                 player,
@@ -54,20 +60,29 @@ class Game{
         this.gameLoop.loop();
     }
 
-    endGame(msg){
-        // TODO: Spielende in die Datenbank eintragen 
+    async endGame(msg){
+        // TODO: Spielende in die Datenbank eintragen
+        this.gameStarted = false;
+        
+        const scoreDb = await this.gameManager.db.scoremanager.createScore({
+            user1: this.playerIds[0],
+            user2: this.playerIds[1],
+            score: this.score
+        });
 
+        const rang = await this.gameManager.db.scoremanager.getScoreRang(scoreDb.id);
 
         this.io.to(`game-${this.code}`).emit("gameEnd", {
             msg: msg,
             score: this.score,
+            rang: rang
         });
     }
 
-    waitingForPlayers(changeTime = false){
+    async waitingForPlayers(changeTime = false){
         if(this.waitingSeconds <= 0){
             if(this.players.length < 2) {
-                this.endGame("Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!");
+                await this.endGame("Das Spiel ist zu Ende, da nicht genug Spieler beigetreten sind!");
                 this.gameManager.games.delete(this.code);
                 return;
             }
@@ -108,16 +123,15 @@ class Game{
     }
 
     /** @param {SocketUser} user */
-    leaveUser(user){
+    async leaveUser(user){
         this.players.forEach((player, index) => {
             if(player.id === user.id){
                 this.players.splice(index, 1);
-                return;
             }
         });
 
         if(this.players.length != 2){
-            this.endGame("Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
+            if(this.gameStarted) await this.endGame("Das Spiel ist zu Ende, da ein Spieler verlassen hat!");
             return 1;
         }
     }

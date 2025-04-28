@@ -17,7 +17,7 @@ class ClientHandler {
             this.socket
         );
 
-        this.socket.on("disconnect", () => { this.defaultDisconnect() });
+        this.socket.on("disconnect", async () => { await this.defaultDisconnect() });
 
         this.joinGame();
     }
@@ -31,8 +31,8 @@ class ClientHandler {
         this.socket.join(`game-${this.currentGameCode}`);
     }
 
-    defaultDisconnect(){
-        this.gameManager.leaveGame(this.user, this.currentGameCode);
+    async defaultDisconnect(){
+        await this.gameManager.leaveGame(this.user, this.currentGameCode);
     }
 }
 

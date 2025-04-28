@@ -2,12 +2,14 @@ const socketIO = require("socket.io");
 const SocketUser = require("../Classes/SocketUser");
 const TemporaryLobby = require("../LobbyManager/Classes/TemporaryLobby");
 const LobbyManager = require("../LobbyManager/LobbyManager");
+const DataBaseManager = require("../../Database/DataBaseManager");
 const Game = require("./Game/Game");
 
 class GameManager {
-    /** @param {socketIO.Server} io @param {LobbyManager} lobbyManager */
-    constructor(io, lobbyManager) {
+    /** @param {socketIO.Server} io @param {DataBaseManager} db @param {LobbyManager} lobbyManager */
+    constructor(io, db, lobbyManager) {
         this.io = io;
+        this.db = db;
         this.lobbyManager = lobbyManager;
 
         /** @type {Map<string, Game>}*/
@@ -52,11 +54,11 @@ class GameManager {
         return oldLobbySave.gameCode;
     }
 
-    leaveGame(user, code){
+    async leaveGame(user, code){
         const game = this.games.get(code);
         if(!game) return 1;
 
-        const response = game.leaveUser(user);
+        const response = await game.leaveUser(user);
         if(response === 1) this.games.delete(code);
     }
 
