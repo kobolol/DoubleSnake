@@ -55,12 +55,13 @@ class Game{
     }
 
     endGame(msg){
+        // TODO: Spielende in die Datenbank eintragen 
+
+
         this.io.to(`game-${this.code}`).emit("gameEnd", {
             msg: msg,
             score: this.score,
         });
-
-        // TODO: Spielende in die Datenbank eintragen 
     }
 
     waitingForPlayers(changeTime = false){

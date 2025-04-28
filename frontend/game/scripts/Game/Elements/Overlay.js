@@ -1,11 +1,14 @@
+import TileLoader from "./TileLoader.js";
+
 class Overlay{
-    constructor(src = null, deg = 0){
-        this.src = src;
+    /** @param {TileLoader} tileLoader */
+    constructor(tileLoader, imgSrc = null, deg = 0){
+        this.tileLoader = tileLoader;
         this.deg = deg;
+        this.src = imgSrc;
 
         if(!this.src) return;
-        this.image = new Image();
-        this.image.src = src;
+        this.image = this.tileLoader.tileMap.get(this.src);
     }
 }
 

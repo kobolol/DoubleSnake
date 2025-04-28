@@ -56,9 +56,9 @@ class Playground{
                 // Falls overlay vorhanden darauf rendern
                 const overlay = this.overlays[y][x];
                 if(!overlay.src) continue;
-                this.ctx.save();
-
+                
                 // Rotation anwenden | Bisschen Komplexes Mathe Funzt :)
+                this.ctx.save();
                 const centerX = posX + this.tileSize / 2;
                 const centerY = posY + this.tileSize / 2;
                 this.ctx.translate(centerX, centerY);
@@ -74,6 +74,7 @@ class Playground{
         this.overlays.forEach(row => {
             row.forEach(overlay => {
                 overlay.src = null;
+                overlay.image = null;
                 overlay.deg = 0;
             })
         })

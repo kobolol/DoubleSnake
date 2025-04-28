@@ -192,7 +192,7 @@ class Snake{
             }
             if(exsitingtile?.class === "Snake"){
                 // Eng Game weil schon belegt mit anderer oder eigender Schlange
-                this.game.endGame(`Ihr seit koolidiert!`)
+                this.game.endGame(`Es gab eine Kollision!`)
             }
 
             this.playground.setTile(tile.x, tile.y, tile);

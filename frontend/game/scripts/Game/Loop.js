@@ -1,4 +1,5 @@
 import Overlay from "./Elements/Overlay.js";
+import TileLoader from "./Elements/TileLoader.js";
 import Game from "./Game.js"
 
 class Loop{
@@ -6,6 +7,7 @@ class Loop{
     constructor(socket, game){
         this.socket = socket;
         this.game = game;
+        this.tileLoader = new TileLoader();
 
         this.socket.on("loop", (data) => { this.loop(data) });
     }
@@ -14,13 +16,14 @@ class Loop{
         this.game.playGround.resetOverlay();
         const tiles = data.playground.tiles;
 
-        // Spielfeld Zeichenen TODO: Image Laden Bug Fixen
+        // Spielfeld Zeichenen
         tiles.forEach((row, x) => {
             row.forEach((tile, y) => {
                 if(!tile) return;
                 if(tile.class === "Snake"){
                     const overlay = new Overlay(
-                        `./assets/Snakes/${tile.color}/${tile.type}.png`,
+                        this.tileLoader,
+                        `Snakes/${tile.color}/${tile.type}.png`,
                         tile.deg
                     )
 
@@ -28,7 +31,8 @@ class Loop{
                 }
                 else if(tile.class === "Fruit"){
                     const overlay = new Overlay(
-                        `./assets/Früchte/${tile.type}.png`
+                        this.tileLoader,
+                        `Fruits/${tile.type}.png`
                     )
 
                     this.game.playGround.setOverlay(x, y, overlay);
