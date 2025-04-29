@@ -1,0 +1,68 @@
+.buttonMenu{
+    height: 65vh;
+}
+
+#tableWrapper{
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+
+    max-height: 50vh;
+    overflow: auto;
+}
+
+table{
+    border-collapse: collapse;
+    border-radius: 15px;
+    overflow: hidden;
+
+    text-align: center;
+}
+
+tr, thead, th, td{
+    border: none;
+}
+
+th, td{
+    padding-left: 40px;
+    padding-right: 40px;
+
+    height: 50px;
+}
+
+thead{
+    background-color: rgb(63, 63, 63);
+}
+
+tr{
+    background-color: rgb(63, 63, 63, 0.5);
+}
+
+tr td:first-child {
+    color: rgb(255, 223, 0);
+    font-size: 20px;
+}
+
+thead th:first-child {
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+}
+thead th:nth-child(2),
+thead th:nth-child(3) {
+    border-left: 3px solid rgba(255, 255, 255, 0.6);
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+}
+thead th:last-child {
+    border-left: 3px solid rgba(255, 255, 255, 0.6);
+}
+
+
+tr td:first-child {
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+}
+tr td:nth-child(2),
+tr td:nth-child(3) {
+    border-left: 3px solid rgba(255, 255, 255, 0.6);
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+}
+tr td:last-child {
+    border-left: 3px solid rgba(255, 255, 255, 0.6);
+}

@@ -7,5 +7,9 @@
 }
 
 #dashboardBtn{
+    background-color: rgb(103, 11, 156);
+}
+
+#highScoreBtn{
     background-color: orange;
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bestenliste</title>
+    <link rel="stylesheet" href="../../style/generalStyle.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="../../assets/Logo.png">
+</head>
+
+<body>
+    <div class="container menu">
+        <img class="logo" src="../assets/Labels/Bestenliste.png" alt="Lobby Logo">
+        <main class="container buttonMenu">
+            <div class="container navButtons" id="mainDiv">
+                <div id="tableWrapper">
+                    <table id="highscoreTable">
+                        <thead>
+                            <th>
+                                <h2>Platz</h2>
+                            </th>
+                            <th>
+                                <h2>Spieler 1</h2>
+                            </th>
+                            <th>
+                                <h2>Spieler 2</h2>
+                            </th>
+                            <th>
+                                <h2>Score</h2>
+                            </th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="container">
+                <button id="homeBtn">
+                    <div class="buttonIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                            fill="#FFFFFF">
+                            <path
+                                d="M200-120q-33 0-56.5-23.5T120-200v-160h80v160h560v-560H200v160h-80v-160q0-33 23.5-56.5T200-840h560q33 0
+                             56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm220-160-56-58 102-102H120v-80h346L364-622l56-58 200 200-200
+                              200Z" />
+                        </svg>
+                    </div>
+                    <div class="buttonText">
+                        Verlassen
+                    </div>
+                </button>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="../scripts/ButtonManager.js"></script>
+<script src="./index.js"></script>
+
+</html>
