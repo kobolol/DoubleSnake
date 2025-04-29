@@ -16,7 +16,7 @@ class AccountRoute {
         this.router.get("/logout", async (req, res) => await this.logout(req, res));
     }
 
-    /**@param {express.Request} req @param {express.Response}*/
+    /**@param {express.Request} req @param {express.Response} res */
     async register(req, res){
         const body = req.body;
         if(!body.username || !body.password) return res.redirect("/register?error=1");
@@ -29,7 +29,7 @@ class AccountRoute {
         res.redirect("/login");
     }
 
-    /**@param {express.Request} req @param {express.Response}*/
+    /**@param {express.Request} req @param {express.Response} res */
     async login(req, res){
         const body = req.body;
         if(!body.username || !body.password) return res.redirect("/login?error=1")
@@ -49,7 +49,7 @@ class AccountRoute {
         res.redirect("/dashboard")
     }
 
-    /**@param {express.Request} req @param {express.Response}*/
+    /**@param {express.Request} req @param {express.Response} res*/
     async update(req, res){
         const user = await this.db.usermanager.getUser({id: req.session.user.id});
         const body = req.body;
@@ -74,7 +74,7 @@ class AccountRoute {
         res.redirect("/dashboard/account");
     }
 
-    /**@param {express.Request} req @param {express.Response}*/
+    /**@param {express.Request} req @param {express.Response} res*/
     async logout(req, res){
         req.session.destroy();
         res.redirect("/");

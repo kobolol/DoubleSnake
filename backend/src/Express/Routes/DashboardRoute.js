@@ -12,7 +12,7 @@ class DashboardRoute{
         this.router.get("/", async (req, res) => await this.userInfo(req, res))
     }
 
-    /**@param {express.Request} req @param {express.Response}*/
+    /**@param {express.Request} req @param {express.Response} res*/
     async userInfo(req, res){
         const user = await this.db.usermanager.getUser({id: req.session.user.id});
 

@@ -5,6 +5,7 @@ const path = require("path");
 const DataBaseManager = require("../Database/DataBaseManager");
 const AccountRoute = require("./Routes/AccountRoute");
 const DashboardRoute = require("./Routes/DashboardRoute");
+const HighScoreRoute = require("./Routes/HighScoreRoute");
 require("dotenv").config();
 
 class ExpressManager{
@@ -39,6 +40,7 @@ class ExpressManager{
         // Routen Einbinden
         this.app.use("/api/account/", new AccountRoute(this.db).router);
         this.app.use("/api/dashboard/", new DashboardRoute(this.db).router);
+        this.app.use("/api/highscore", new HighScoreRoute(this.db).router);
     }
 
     /**@param {express.Request} req @param {express.Response} res @param {express.NextFunction} next*/
