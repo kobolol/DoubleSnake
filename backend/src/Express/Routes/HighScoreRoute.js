@@ -24,10 +24,12 @@ class HighScoreRoute {
         for(const highscore of highscores){
             const user1 = await this.db.usermanager.getUser({id: highscore.user1ID});
             const user2 = await this.db.usermanager.getUser({id: highscore.user2ID});
+            const rang = highscores.indexOf(highscore) + 1;
 
             returnJSON.scores.push({
                 id: highscore.id,
                 score: highscore.score,
+                rang: rang,
                 user1: {
                     id: user1.id,
                     username: user1.username,
