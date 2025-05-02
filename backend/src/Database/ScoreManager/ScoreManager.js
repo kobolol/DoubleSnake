@@ -39,6 +39,18 @@ class ScoreManager{
 
         return allSortetScores.indexOf(score) + 1;
     }
+
+    async getSplitedScoreCount(){
+        const allSortetScores = await this.getAllScores();
+
+        const count = Math.ceil(allSortetScores.lenght / 25);
+
+        return count;
+    }
+
+    async getSpiltedScore(count){
+        
+    }
 }
 
 module.exports = ScoreManager;

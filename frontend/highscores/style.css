@@ -66,3 +66,11 @@ tr td:nth-child(3) {
 tr td:last-child {
     border-left: 3px solid rgba(255, 255, 255, 0.6);
 }
+
+#siteSelector{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ 
