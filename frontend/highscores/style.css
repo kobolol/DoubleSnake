@@ -67,10 +67,16 @@ tr td:last-child {
     border-left: 3px solid rgba(255, 255, 255, 0.6);
 }
 
-#siteSelector{
+#countSelector{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
- 
+#countSelector > * {
+    margin: 10px;
+}
+
+.navButtons{
+    flex-direction: column;
+}

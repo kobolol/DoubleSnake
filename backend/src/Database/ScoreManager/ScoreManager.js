@@ -5,11 +5,13 @@ class ScoreManager{
     /**@param {mySql.Connection} connection*/
     constructor(connection) {
         this.connection = connection;
+
+        this.splitLimit = 25;
     }
 
     async getAllScores(){
         const response = await this.connection.promise().query("SELECT * FROM scores ORDER BY score DESC");
-        const sortedScores = response[0].map(scoreData => new Score(scoreData));
+        const sortedScores = response[0].map((scoreData, index) => new Score(scoreData, index + 1));
 
         return sortedScores;
     }
@@ -32,24 +34,27 @@ class ScoreManager{
         return new Score(response.rows[0][0]);
     }
 
-    async getScoreRang(id){
-        const allSortetScores = await this.getAllScores();
-
-        const score = allSortetScores.find(score => score.id === id);
-
-        return allSortetScores.indexOf(score) + 1;
-    }
-
     async getSplitedScoreCount(){
         const allSortetScores = await this.getAllScores();
 
-        const count = Math.ceil(allSortetScores.lenght / 25);
+        const count = Math.ceil(allSortetScores.length / 25);
 
         return count;
     }
 
     async getSpiltedScore(count){
-        
+        const offset = (count - 1) * this.splitLimit;
+
+        const response = await this.connection.promise().query(
+            `SELECT * FROM scores ORDER BY score DESC LIMIT ${this.splitLimit} OFFSET ${offset}`,
+        );
+
+        const sortedScoreSplit = response[0].map((scoreData, index) => {
+            const rank = offset + index + 1;
+            return new Score(scoreData, rank);
+        });
+
+        return sortedScoreSplit;
     }
 }
 
