@@ -35,7 +35,7 @@ DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels für zw
 
 1. **Repository klonen**
    ```bash
-   git clone https://github.com/yourusername/doubleSnake.git
+   git clone [https://github.com/yourusername/doubleSnake.git](https://github.com/yourusername/doubleSnake.git)
    cd doubleSnake
    ```
 
@@ -43,8 +43,7 @@ DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels für zw
    - Erstellen Sie eine MySQL-Datenbank mit dem Namen "doublesnake"
    - Importieren Sie die Datenbankstruktur aus der Datei `doublesnake.sql`
 
-3. **Umgebungsvariablen konfigurieren**  
-   Erstellen Sie eine `.env`-Datei im Backend-Verzeichnis mit folgenden Werten:
+3. **Umgebungsvariablen konfigurieren** Erstellen Sie eine `.env`-Datei im Backend-Verzeichnis mit folgenden Werten:
    ```
    SESSION_KEY=IhrGeheimesSessionKey
    PORT=3000
@@ -67,8 +66,7 @@ DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels für zw
    npm run nm
    ```
 
-6. **Anwendung öffnen**  
-   Navigieren Sie zu `http://localhost:3000` in Ihrem Browser
+6. **Anwendung öffnen** Navigieren Sie zu `http://localhost:3000` in Ihrem Browser
 
 ## 🐳 Docker-Installation
 
