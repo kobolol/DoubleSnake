@@ -6,7 +6,6 @@ class Fruit{
     constructor(fruitManager, playground, startX, startY, type, index = 0) {
         this.fruitManager = fruitManager;
         this.playground = playground;
-        this.index = index;
 
         this.x = startX;
         this.y = startY;
@@ -20,7 +19,7 @@ class Fruit{
         if(tile === undefined) return;
 
         if(tile?.class === "Snake"){
-            this.fruitManager.scored(this.index, tile.color);
+            this.fruitManager.scored(this, tile.color);
 
             return;
         }

@@ -186,16 +186,16 @@ class Snake{
             const exsitingtile = this.playground.getTile(tile.x, tile.y);
     
             // TODO: Klammert man das ein Kann man alleine Spielen, da es keine Kolisionserkennung gibt
-            if(exsitingtile === undefined){
-                // End Game weil außerhalb des Spielfeldes
-                await this.game.endGame(`${this.player.username} hat die Wand berührt!`);
-                return;
-            }
-            if(exsitingtile?.class === "Snake"){
-                // Eng Game weil schon belegt mit anderer oder eigender Schlange
-                await this.game.endGame(`Es gab eine Kollision!`);
-                return;
-            }
+            // if(exsitingtile === undefined){
+            //     // End Game weil außerhalb des Spielfeldes
+            //     await this.game.endGame(`${this.player.username} hat die Wand berührt!`);
+            //     return;
+            // }
+            // if(exsitingtile?.class === "Snake"){
+            //     // Eng Game weil schon belegt mit anderer oder eigender Schlange
+            //     await this.game.endGame(`Es gab eine Kollision!`);
+            //     return;
+            // }
     
             this.playground.setTile(tile.x, tile.y, tile);
         }

@@ -26,6 +26,9 @@ class FruitManager{
 
     createFruit(){
         const pos = this.randomUnusedTile();
+
+        if(pos === null) return;
+
         const type = Math.random() < 0.5 ? "Apfel" : "Blaubeere";
         const newFruit = new Fruit(
             this,
@@ -36,7 +39,7 @@ class FruitManager{
         );
         this.fruits.push(newFruit);
 
-        this.fruits.forEach((fruit, i) => { fruit.index = i });
+        newFruit.update();
     }
 
 
@@ -44,6 +47,8 @@ class FruitManager{
         let isUnused = false;
         let x = 0;
         let y = 0;
+        let attempts = 0;
+        const maxAttempts = this.playground.width * this.playground.height;
 
         do{
             x = Math.floor(Math.random() * this.playground.height);
@@ -52,22 +57,35 @@ class FruitManager{
             const tile = this.playground.getTile(x, y);
 
             if(tile === null) isUnused = true;
-        } while(!isUnused);
+            attempts++;
+        } while(!isUnused && attempts < maxAttempts);
+
+        if(!isUnused){
+            return null;
+        }
 
         return {x, y};
     }
     updateFruits(){
-        this.fruits.forEach(fruit => fruit.update());
+        const fruitsCopy = [...this.fruits];
+        fruitsCopy.forEach(fruit => {
+            if (this.fruits.includes(fruit)) {
+                fruit.update();
+            }
+        });
     }
 
-    scored(fruitIndex, snakeColor){
+    scored(fruitToDelete, snakeColor){
+        const fruitIndexInArray = this.fruits.indexOf(fruitToDelete);
+
+        if (fruitIndexInArray === -1) return;
+        this.fruits.splice(fruitIndexInArray, 1);
         this.game.score += 1;
 
         this.game.gameLoop.snakes.forEach(snake => {
             if(snake.color == snakeColor) snake.getBigger();
         })
 
-        this.fruits.splice(fruitIndex, 1);
 
         this.createFruit();
     }
