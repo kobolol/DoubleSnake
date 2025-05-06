@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anleitung</title>
+    <link rel="stylesheet" href="../../style/generalStyle.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="../../assets/Logo.png">
+</head>
+
+<body>
+    <div class="container menu">
+        <img class="logo" src="../assets/Labels/Anleitung.png" alt="Lobby Logo">
+        <main class="container buttonMenu">
+            <div class="container navButtons" id="mainDiv">
+                <div id="introWrapper">
+                    <div class="anleitung-text-content">
+                        <h1>Spielanleitung</h1>
+
+                        <h2>Registrierung & Anmeldung:</h2>
+                        <ul>
+                            <li>Registriere dich für ein neues Konto oder melde dich mit deinen bestehenden Daten an, um loszulegen.</li>
+                            <li>Um zu starten ist es nur wichtig einen Username und ein Passwort anzugeben</li>
+                        </ul>
+
+                        <h2>Lobby erstellen oder beitreten:</h2>
+                        <ul>
+                            <li>Navigiere zum Dashboard und wähle "Lobby".</li>
+                            <li>Du kannst eine neue Lobby erstellen. Ein einzigartiger Code wird generiert, den du mit einem Freund teilen kannst.</li>
+                            <li>Alternativ kannst du einer bestehenden Lobby beitreten, indem du den Code deines Freundes eingibst.</li>
+                        </ul>
+
+                        <h2>Spielstart:</h2>
+                        <ul>
+                            <li>Sobald zwei Spieler erfolgreich der Lobby beigetreten sind, startet das Spiel automatisch nach einem 5 Sekunden Countdown.</li>
+                            <li>Danach werdet ihr auf die Spielseite geleitet, wo ihr nochmal 5 Sekunden warten müsst, damit alle auf die Seite weitgeleitet wurden.</li>
+                        </ul>
+
+                        <h2>Spielablauf & Steuerung:</h2>
+                        <ul>
+                            <li>Jeder Spieler steuert eine Schlange. Welche Farbe man hat kann man an der rechten Infobox entnehmen.</li>
+                            <li>Benutze die Tasten <strong>W</strong> (hoch), <strong>A</strong> (links), <strong>S</strong> (runter), <strong>D</strong> (rechts) oder die <strong>Pfeiltasten</strong>, um deine Schlange zu steuern.</li>
+                            <li>Sammelt gemeinsam Früchte (Äpfel und Blaubeeren), um Punkte zu erzielen und eure Schlangen wachsen zu lassen. Jede gefressene Frucht erhöht den gemeinsamen Punktestand.</li>
+                            <li>Welche Schlange welche Frucht dabei sammelt ist egal.</li>
+                            <li>Ziel ist es, so viele Punkte wie möglich zu sammeln, ohne mit den Wänden, der eigenen Schlange oder der Schlange des Partners zu kollidieren.</li>
+                        </ul>
+
+                        <h2>Spielende:</h2>
+                        <ul>
+                            <li>Das Spiel endet, wenn eine der Schlangen kollidiert.</li>
+                            <li>Euer erreichter Punktestand wird angezeigt und gegebenenfalls in der Bestenliste gespeichert.</li>
+                            <li>Ihr habt nach Spielende 5 Sekunden Zeit, direkt eine neue Runde zu starten, sofern beide Spieler noch im Spiel sind.</li>
+                            <li>Sollte nur einer der Spieler erneut starten, wird das neue Spiel nach 5 Sekunden beendet.</li>
+                        </ul>
+
+                        <h2>Tipps:</h2>
+                        <ul>
+                            <li>Kommunikation ist der Schlüssel! Sprecht euch ab, um Kollisionen zu vermeiden und effizient Früchte zu sammeln.</li>
+                            <li>Versucht, euch nicht gegenseitig den Weg abzuschneiden.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <button id="homeBtn">
+                    <div class="buttonIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                            fill="#FFFFFF">
+                            <path
+                                d="M200-120q-33 0-56.5-23.5T120-200v-160h80v160h560v-560H200v160h-80v-160q0-33 23.5-56.5T200-840h560q33 0
+                             56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm220-160-56-58 102-102H120v-80h346L364-622l56-58 200 200-200
+                              200Z" />
+                        </svg>
+                    </div>
+                    <div class="buttonText">
+                        Verlassen
+                    </div>
+                </button>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="../scripts/ButtonManager.js"></script>
+</html>

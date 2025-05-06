@@ -8,7 +8,7 @@ class ButtonManager {
             { id: "lobbyBtn", route: "/dashboard/lobby" },
             { id: "accountBtn", route: "/dashboard/account" },
             { id: "logoutBtn", route: "/api/account/logout" },
-            { id: "tutorialBtn", route: "https://www.youtube.com/watch?v=1fkV5rB13jQ" },
+            { id: "tutorialBtn", route: "/introduction" },
             { id: "highScoreBtn", route: "/highscores"}
         ];
 

@@ -1,0 +1,63 @@
+.buttonMenu{
+    height: 65vh;
+}
+
+#introWrapper{
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+
+    max-height: 50vh;
+    overflow: auto;
+
+    background-color: rgb(63, 63, 63, 0.5);
+
+    padding: 15px;
+}
+
+.anleitung-text-content h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+}
+
+.anleitung-text-content h2 {
+    color: #487fc0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.6em;
+    border-bottom: 1px solid #487fc0;
+    padding-bottom: 3px;
+}
+
+.anleitung-text-content ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    margin-bottom: 15px;
+    padding-left: 0; /* Entferne Standard-Padding von ul */
+}
+
+.anleitung-text-content li {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.anleitung-text-content strong {
+    color: #FFA500; /* Orange für hervorgehobene Tasten */
+}
+
+.anleitung-bild {
+    max-width: 100%; /* Stellt sicher, dass Bilder nicht über den Container hinausragen */
+    height: auto; /* Behält das Seitenverhältnis bei */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block; /* Macht das Bild zu einem Blockelement für einfacheres Zentrieren/Margin */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.small-bild {
+    max-width: 60%; /* Kleinere Bilder, z.B. für UI-Ausschnitte */
+}
