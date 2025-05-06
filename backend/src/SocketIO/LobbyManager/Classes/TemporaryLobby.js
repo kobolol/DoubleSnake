@@ -4,14 +4,14 @@ const SocketUser = require("../../Classes/SocketUser");
 
 class TemporaryLobby{
     /** @param { string } code  @param {Array<SocketUser>} users @param {LobbyManager} lobbyManager */
-    constructor(code, users, lobbyManager){
+    constructor(code, users, lobbyManager, destuctionTime){
         this.code = code;
         this.users = users;
         this.lobbyManager = lobbyManager;
 
         this.gameCode = null;
 
-        setTimeout(this.selfDestroy.bind(this), 4000);
+        setTimeout(this.selfDestroy.bind(this), destuctionTime);
     }
 
     selfDestroy(){

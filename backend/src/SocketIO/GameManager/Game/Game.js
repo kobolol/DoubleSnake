@@ -1,5 +1,6 @@
 const socketIO = require("socket.io");
 const SocketUser = require("../../Classes/SocketUser");
+const TemporaryLobby = require("../../LobbyManager/Classes/TemporaryLobby");
 const GameManager = require("../GameManager");
 const GameLoop = require("./GameLoop");
 const Snake = require("./Classes/Snake/Snake");
@@ -61,21 +62,46 @@ class Game{
     }
 
     async endGame(msg){
-        // TODO: Spielende in die Datenbank eintragen
-        this.gameStarted = false;
-        
-        const scoreDb = await this.gameManager.db.scoremanager.createScore({
-            user1: this.playerIds[0],
-            user2: this.playerIds[1],
-            score: this.score
-        });
+        let scoreDb = undefined;
+        if(this.gameStarted){
+            scoreDb = await this.gameManager.db.scoremanager.createScore({
+                user1: this.playerIds[0],
+                user2: this.playerIds[1],
+                score: this.score
+            });
+        }
 
-        const rang = await this.gameManager.db.scoremanager.getScoreRang(scoreDb.id);
+        this.gameStarted = false;
+
+        /*
+            Hinzufügen der Funktion zum erneuten Spielen
+            Nur wenn noch beide Spieler da sind
+        */
+
+        if(this.players.length === 2){
+            const lobbyManager = this.gameManager.lobbyManager;
+
+            const newUserList = [];
+
+            this.players.forEach(x => {
+                const user = new SocketUser(x.id, x.username);
+                newUserList.push(user);
+            })
+
+            const tempLobby = new TemporaryLobby(
+                0,
+                newUserList,
+                lobbyManager,
+                10000
+            );
+
+            lobbyManager.oldLobbys.push(tempLobby);
+        }
 
         this.io.to(`game-${this.code}`).emit("gameEnd", {
             msg: msg,
             score: this.score,
-            rang: rang
+            rang: scoreDb?.rank || "-"
         });
     }
 

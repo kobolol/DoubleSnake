@@ -25,13 +25,18 @@ class ScoreManager{
         
         const selectSql = `SELECT * FROM scores WHERE id = ${insertId}`;
         const selectResult = await this.connection.promise().query(selectSql);
+
+        const rank = await this.getRankById(insertId);
         
-        return new Score(selectResult[0][0]);
+        return new Score(selectResult[0][0], rank);
     }
 
     async getScoreById(id){
         const response = await this.connection.promise().query(`SELECT * FROM scores WHERE id = ${id}`);
-        return new Score(response.rows[0][0]);
+
+        const rank = await this.getRankById(id);
+
+        return new Score(response[0][0], rank);
     }
 
     async getSplitedScoreCount(){
@@ -55,6 +60,14 @@ class ScoreManager{
         });
 
         return sortedScoreSplit;
+    }
+
+    async getRankById(id){
+        const rankSql = `SELECT COUNT(*) + 1 AS rank FROM scores WHERE score > (SELECT score FROM scores WHERE id = ${id})`;
+        const rankResult = await this.connection.promise().query(rankSql); 
+        const rank = rankResult[0][0].rank;
+
+        return rank;
     }
 }
 

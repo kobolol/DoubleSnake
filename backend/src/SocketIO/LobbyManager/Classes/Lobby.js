@@ -89,7 +89,8 @@ class Lobby {
             const tempLobby = new TemporaryLobby(
                 this.code,
                 newUserList,
-                this.lobbyManager
+                this.lobbyManager,
+                4000
             );
 
             this.lobbyManager.oldLobbys.push(tempLobby);
