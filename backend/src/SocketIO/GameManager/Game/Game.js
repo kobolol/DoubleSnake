@@ -78,6 +78,9 @@ class Game{
             Nur wenn noch beide Spieler da sind
         */
 
+        let replayPossible = false;
+        const replayTime = 5000;
+
         if(this.players.length === 2){
             const lobbyManager = this.gameManager.lobbyManager;
 
@@ -92,16 +95,22 @@ class Game{
                 0,
                 newUserList,
                 lobbyManager,
-                10000
+                replayTime
             );
 
             lobbyManager.oldLobbys.push(tempLobby);
+
+            replayPossible = true;
         }
 
         this.io.to(`game-${this.code}`).emit("gameEnd", {
             msg: msg,
             score: this.score,
-            rang: scoreDb?.rank || "-"
+            rang: scoreDb?.rank || "-",
+            replay: {
+                possible: replayPossible,
+                time: replayTime
+            }
         });
     }
 
