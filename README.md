@@ -70,12 +70,26 @@ DoubleSnake ist eine moderne Interpretation des klassischen Snake-Spiels für zw
 
 ## 🐳 Docker-Installation
 
-Das Projekt enthält eine Dockerfile für einfaches Deployment:
+Das Projekt enthält zwei Docker-Konfigurationen:
 
-```bash
-docker build -t doublesnake .
-docker run -p 3000:3000 -e DB_HOST=your-db-host doublesnake
-```
+- **`Dockerfile`** – Für lokale Tests oder einfache Deployments.
+  ```bash
+  docker build -t doublesnake .
+  docker run -p 3000:3000 -e DB_HOST=your-db-host -e DB_PASSWORD=your-db-password -e SESSION_KEY=your-session-key doublesnake
+  ```
+- **`Dockerfile.dokploy`** – Optimierte Variante für das Hosting über [Dokploy](https://dokploy.com/). Hierbei wird nur der notwendige Produktionscode in ein Debian-basiertes Node.js-Image übertragen, damit Module wie `bcrypt` ohne zusätzliche Build-Tools funktionieren.
+  ```bash
+  docker build -f Dockerfile.dokploy -t doublesnake-prod .
+  docker run -p 3000:3000 \
+    -e SESSION_KEY=your-session-key \
+    -e DB_HOST=your-db-host \
+    -e DB_PORT=3306 \
+    -e DB_USER=your-db-user \
+    -e DB_PASSWORD=your-db-password \
+    doublesnake-prod
+  ```
+
+> 💡 Für Dokploy sollte die Datenbank als externer Service eingebunden werden. Die oben aufgeführten Umgebungsvariablen können direkt im Dokploy-Dashboard konfiguriert werden. Der statische Frontend-Code wird automatisch in den Container kopiert, daher ist keine zusätzliche Konfiguration für `FRONTEND_PATH` erforderlich.
 
 ## 🎮 Spielablauf
 
