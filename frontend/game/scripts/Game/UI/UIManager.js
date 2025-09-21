@@ -1,3 +1,8 @@
+const SNAKE_COLOR_ASSET_MAP = {
+    blue: "Blue",
+    red: "Red",
+};
+
 class UIManager{
     constructor(){
         this.mainDiv = document.getElementById("mainMenu");
@@ -50,20 +55,21 @@ class UIManager{
 
         const snakeTable = document.createElement("table");
         const lenght = 3;
+        const assetColor = SNAKE_COLOR_ASSET_MAP[color] ?? color;
         for (let i = 0; i < lenght; i++) {
             const tr = document.createElement("tr");
             const td = document.createElement("td");
-    
+
             const img = document.createElement("img");
             switch (i) {
                 case 0:
-                    img.src = `./assets/Snakes/${color}/Head.png`;
+                    img.src = `./assets/Snakes/${assetColor}/Head.png`;
                     break;
                 case lenght - 1:
-                    img.src = `./assets/Snakes/${color}/End.png`;
+                    img.src = `./assets/Snakes/${assetColor}/End.png`;
                     break;
                 default:
-                    img.src = `./assets/Snakes/${color}/Straight.png`;
+                    img.src = `./assets/Snakes/${assetColor}/Straight.png`;
                     break;
             }
             img.style.transform = "rotate(270deg)";
