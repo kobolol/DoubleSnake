@@ -1,5 +1,5 @@
 import Overlay from "./Elements/Overlay.js";
-import TileLoader from "./Elements/TileLoader.js";
+import TileLoader, { resolveSnakeAssetColor } from "./Elements/TileLoader.js";
 import Game from "./Game.js"
 
 class Loop{
@@ -21,9 +21,10 @@ class Loop{
             row.forEach((tile, y) => {
                 if(!tile) return;
                 if(tile.class === "Snake"){
+                    const assetColor = resolveSnakeAssetColor(tile.color);
                     const overlay = new Overlay(
                         this.tileLoader,
-                        `Snakes/${tile.color}/${tile.type}.png`,
+                        `Snakes/${assetColor}/${tile.type}.png`,
                         tile.deg
                     )
 

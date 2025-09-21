@@ -5,6 +5,8 @@ const GameManager = require("../GameManager");
 const GameLoop = require("./GameLoop");
 const Snake = require("./Classes/Snake/Snake");
 
+const SNAKE_COLORS = ["red", "blue"]; // must stay in sync with the frontend asset map
+
 class Game{
     /** @param {socketIO.Server} io @param {GameManager} gameManager @param {number} code */
     constructor(io, gameManager, code) {
@@ -17,7 +19,7 @@ class Game{
         this.waitingSeconds = 5;
         this.gameStarted = false;
 
-        this.snakeColors = ["red", "blue"];
+        this.snakeColors = [...SNAKE_COLORS];
 
         /**@type {Array<SocketUser>} */
         this.players = [];
