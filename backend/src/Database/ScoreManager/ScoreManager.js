@@ -17,22 +17,23 @@ class ScoreManager{
     }
 
     async createScore(newScoreJson){
-        const sql = `INSERT INTO scores (user1, user2, score) VALUES (
-            ${newScoreJson.user1}, ${newScoreJson.user2}, ${newScoreJson.score})`;
-        
-        const insertResult = await this.connection.promise().query(sql);
+        const sql = "INSERT INTO scores (user1, user2, score) VALUES (?, ?, ?)";
+
+        const insertResult = await this.connection
+            .promise()
+            .query(sql, [newScoreJson.user1, newScoreJson.user2, newScoreJson.score]);
         const insertId = insertResult[0].insertId;
-        
-        const selectSql = `SELECT * FROM scores WHERE id = ${insertId}`;
-        const selectResult = await this.connection.promise().query(selectSql);
+
+        const selectSql = "SELECT * FROM scores WHERE id = ?";
+        const selectResult = await this.connection.promise().query(selectSql, [insertId]);
 
         const rank = await this.getRankById(insertId);
-        
+
         return new Score(selectResult[0][0], rank);
     }
 
     async getScoreById(id){
-        const response = await this.connection.promise().query(`SELECT * FROM scores WHERE id = ${id}`);
+        const response = await this.connection.promise().query("SELECT * FROM scores WHERE id = ?", [id]);
 
         const rank = await this.getRankById(id);
 
@@ -63,9 +64,11 @@ class ScoreManager{
     }
 
     async getRankById(id){
-        const rankSql = `SELECT COUNT(*) + 1 AS rank FROM scores WHERE score > (SELECT score FROM scores WHERE id = ${id})`;
-        const rankResult = await this.connection.promise().query(rankSql); 
-        const rank = rankResult[0][0].rank;
+        const rankSql =
+            "SELECT COUNT(*) + 1 AS rank_position FROM scores WHERE score > (SELECT score FROM scores WHERE id = ?)";
+        const rankResult = await this.connection.promise().query(rankSql, [id]);
+
+        const rank = rankResult[0][0]?.rank_position ?? null;
 
         return rank;
     }
