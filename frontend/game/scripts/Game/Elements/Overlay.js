@@ -8,7 +8,15 @@ class Overlay{
         this.src = imgSrc;
 
         if(!this.src) return;
-        this.image = this.tileLoader.tileMap.get(this.src);
+        const image = this.tileLoader.getImage(this.src);
+
+        if(!image){
+            this.src = null;
+            return;
+        }
+
+        this.src = this.tileLoader.resolveSrc(this.src);
+        this.image = image;
     }
 }
 
