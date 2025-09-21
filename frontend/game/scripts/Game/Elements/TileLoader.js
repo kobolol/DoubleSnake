@@ -1,17 +1,28 @@
+const SNAKE_COLOR_ASSET_MAP = {
+    blue: "Blue",
+    red: "Red",
+};
+
 class TileLoader{
     constructor(){
-        this.allSrc = [
+        const fruitSources = [
             "Fruits/Apfel.png",
             "Fruits/Blaubeere.png",
-            "Snakes/blue/End.png",
-            "Snakes/blue/Head.png",
-            "Snakes/blue/Straight.png",
-            "Snakes/blue/Turn.png",
-            "Snakes/red/End.png",
-            "Snakes/red/Head.png",
-            "Snakes/red/Straight.png",
-            "Snakes/red/Turn.png",
         ];
+
+        const snakeSegments = [
+            "End.png",
+            "Head.png",
+            "Straight.png",
+            "Turn.png",
+        ];
+
+        const snakeSources = Object.keys(SNAKE_COLOR_ASSET_MAP).flatMap(color => {
+            const assetColor = SNAKE_COLOR_ASSET_MAP[color] ?? color;
+            return snakeSegments.map(segment => `Snakes/${assetColor}/${segment}`);
+        });
+
+        this.allSrc = [...fruitSources, ...snakeSources];
 
         this.tileMap = new Map();
 
