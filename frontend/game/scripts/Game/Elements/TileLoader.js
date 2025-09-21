@@ -32,6 +32,26 @@ class TileLoader{
             this.tileMap.set(src, img);
         })
     }
+
+    resolveSrc(src){
+        if(this.tileMap.has(src)) return src;
+
+        const [category, color, ...rest] = src.split("/");
+        if(category !== "Snakes" || rest.length === 0) return src;
+
+        const mappedColor = SNAKE_COLOR_ASSET_MAP[color] ?? color;
+        const normalizedSrc = [category, mappedColor, ...rest].join("/");
+
+        if(this.tileMap.has(normalizedSrc)) return normalizedSrc;
+
+        return src;
+    }
+
+    getImage(src){
+        const resolvedSrc = this.resolveSrc(src);
+
+        return this.tileMap.get(resolvedSrc);
+    }
 }
 
 export default TileLoader;
