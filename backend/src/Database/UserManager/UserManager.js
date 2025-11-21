@@ -3,9 +3,20 @@ const bcrypt = require("bcrypt")
 const User = require("./User")
 
 class UserManager {
-    /**@param {mySql.Connection} connection*/
-    constructor(connection) {
-        this.connection = connection;
+    /**@param {() => mySql.Connection} connectionFactory*/
+    constructor(connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    async withConnection(callback) {
+        const connection = this.connectionFactory();
+
+        try {
+            return await callback(connection);
+        }
+        finally {
+            connection.end();
+        }
     }
 
     // Gebe zumindest {username: "x", password: "x"} mit!
@@ -16,14 +27,20 @@ class UserManager {
         const user = await this.getUser({username: userJson.username});
         if(user) return 0;
 
-        try {
-            const passHash = await bcrypt.hash(userJson.password, 10);
-            this.connection.query(`INSERT INTO users (username, email, password, fullName) VALUES ("${userJson.username}",` + 
-                ` ${userJson.email ? `"${userJson.email}"` : "NULL"}, "${passHash}", ${userJson.fullName ? `"${userJson.fullName}"` : "NULL"})`);
-            return 1;
-        } catch (error) {
-            console.log(error);
-        }
+        return await this.withConnection(async (connection) => {
+            try {
+                const passHash = await bcrypt.hash(userJson.password, 10);
+                await connection
+                    .promise()
+                    .query(
+                        `INSERT INTO users (username, email, password, fullName) VALUES ("${userJson.username}",` +
+                        ` ${userJson.email ? `"${userJson.email}"` : "NULL"}, "${passHash}", ${userJson.fullName ? `"${userJson.fullName}"` : "NULL"})`
+                    );
+                return 1;
+            } catch (error) {
+                console.log(error);
+            }
+        });
     }
 
     // Gebe nichts mit um alle user zu bekommen oder {id: 1} oder {username: "x"} um darauf einen bestimmten zu bekommen;
@@ -37,30 +54,32 @@ class UserManager {
             selectionString = `SELECT * FROM users WHERE username="${userData.username}"`;
         }
 
-        try {
-            const response = await this.connection.promise().query(selectionString);
-            
-            if(response[0].length === 0){
-                return null;
-            }
-            else if(response[0].length === 1){
-                const x = response[0][0];
-                return new User(x);
-            }
-            else{
-                let userArray = [];
-                
-                response[0].forEach(x => {
-                    const user = new User(x);
+        return await this.withConnection(async (connection) => {
+            try {
+                const response = await connection.promise().query(selectionString);
 
-                    userArray.push(user);
-                });
+                if(response[0].length === 0){
+                    return null;
+                }
+                else if(response[0].length === 1){
+                    const x = response[0][0];
+                    return new User(x);
+                }
+                else{
+                    let userArray = [];
 
-                return userArray;
+                    response[0].forEach(x => {
+                        const user = new User(x);
+
+                        userArray.push(user);
+                    });
+
+                    return userArray;
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     // 0: User Existiert nicht | 1: Funktioniert
@@ -70,19 +89,23 @@ class UserManager {
         if(!user) return 0;
         if(!newUserData.password) return 0;
 
-        try {
-            this.connection.query(
-                `UPDATE users SET 
-                username="${newUserData.username}", 
-                email=${newUserData.email ? `"${newUserData.email}"` : "NULL"}, 
-                fullName=${newUserData.fullName ? `"${newUserData.fullName}"` : "NULL"}, 
-                password="${newUserData.password}" 
+        return await this.withConnection(async (connection) => {
+            try {
+                await connection
+                    .promise()
+                    .query(
+                        `UPDATE users SET
+                username="${newUserData.username}",
+                email=${newUserData.email ? `"${newUserData.email}"` : "NULL"},
+                fullName=${newUserData.fullName ? `"${newUserData.fullName}"` : "NULL"},
+                password="${newUserData.password}"
                 WHERE id = ${id}`
-            )
-            return 1;
-        } catch (error) {
-            console.log(error)
-        }
+                    );
+                return 1;
+            } catch (error) {
+                console.log(error)
+            }
+        });
     }
 
     // 0: Es gibt den User nicht | 1: Funktioniert
@@ -90,12 +113,14 @@ class UserManager {
         const user = await this.getUser({id});
         if(!user) return 0;
 
-        try {
-            this.connection.query(`DELETE FROM users where id=${id}`);
-            return 1;
-        } catch (error) {
-            console.log(error)
-        }
+        return await this.withConnection(async (connection) => {
+            try {
+                await connection.promise().query(`DELETE FROM users where id=${id}`);
+                return 1;
+            } catch (error) {
+                console.log(error)
+            }
+        });
     }
 }
 
