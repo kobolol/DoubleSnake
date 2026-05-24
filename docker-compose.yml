@@ -1,0 +1,18 @@
+﻿services:
+  mariadb:
+    image: mariadb:11
+    container_name: doublesnake-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: "DeinSehrSicheresPasswort123!"
+      MARIADB_DATABASE: "doublesnake"
+      MARIADB_USER: "doublesnake"
+      MARIADB_PASSWORD: "DeinSehrSicheresPasswort123!"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./doublesnake.sql:/docker-entrypoint-initdb.d/01-doublesnake.sql:ro
+
+volumes:
+  mariadb_data:

@@ -8,7 +8,7 @@ class DataBaseManager {
         this.connectionConfig = {
             host: host,
             port: process.env.DB_PORT || 3306,
-            user: "root",
+            user: process.env.DB_USER || "root",
             password: process.env.DB_PASSWORD || undefined,
             database: database
         };
